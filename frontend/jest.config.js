@@ -1,7 +1,7 @@
 module.exports = {
   collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}', '!**/node_modules/**'],
   coveragePathIgnorePatterns: [
-    'coverage',
+    '/coverage/',
     'jest.config.js',
     'Meta.js',
     'Page.js',
