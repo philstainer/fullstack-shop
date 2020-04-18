@@ -2,10 +2,9 @@
 
 Uses the following technologies:
 
-- Prisma 2
 - Next.js
 - GraphQL
-- Postgres
+- MongoDB
 - Docker (and Docker Compose)
 - AWS
 

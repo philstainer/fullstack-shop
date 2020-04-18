@@ -4,18 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "yarn run prisma:up && babel-watch -L src/index.js",
-    "prisma:save": "prisma migrate save --experimental",
-    "prisma:up": "prisma migrate up --experimental",
-    "prisma:generate": "prisma generate",
-    "test": "cross-env NODE_ENV=test jest --watch",
-    "postinstall": "yarn run prisma:generate"
+    "dev": "babel-watch -L src/index.js",
+    "test": "cross-env NODE_ENV=test jest --watch"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.5",
-    "@prisma/client": "^2.0.0-beta.2",
     "apollo-server-express": "^2.12.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "bcryptjs": "^2.4.3",
@@ -23,14 +18,16 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "lodash.merge": "^4.6.2",
+    "mongoose": "^5.9.9",
     "nodemailer": "^6.4.6",
     "stripe": "^8.43.0"
   },
   "devDependencies": {
-    "@prisma/cli": "^2.0.0-beta.2",
     "babel-watch": "^7.0.0",
     "cross-env": "^7.0.2",
     "jest": "^25.3.0",
+    "morgan": "^1.10.0",
     "supertest": "^4.0.2"
   }
 }
