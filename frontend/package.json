@@ -7,7 +7,7 @@
     "dev": "next -p $PORT",
     "build": "next build",
     "start": "next start",
-    "test": "cross-env NODE_ENV=test jest --watch"
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "next": "^9.3.5",
@@ -20,7 +20,6 @@
     "@testing-library/react": "^10.0.2",
     "babel-jest": "^25.3.0",
     "babel-plugin-styled-components": "^1.10.7",
-    "cross-env": "^7.0.2",
     "jest": "^25.3.0"
   }
 }

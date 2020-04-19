@@ -1,23 +1,14 @@
 'use strict'
 
-import {ApolloServer} from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import cors from 'cors'
 
-import schema from '#root/graphql/schema'
-import context from '#root/graphql/context'
+import apolloServer from '#root/graphql/apolloServer'
 
 // import formatGraphQLErrors from '#root/helpers/formatGraphQLErrors'
 
 const isProduction = process.env.NODE_ENV === 'production'
-
-const apolloServer = new ApolloServer({
-  // formatError: formatGraphQLErrors,
-  schema,
-  context,
-  playground: !isProduction,
-})
 
 const app = express()
 

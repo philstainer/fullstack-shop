@@ -1,0 +1,16 @@
+{
+  "name": "fullstack-shop",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/PhilStainer/fullstack-shop",
+  "author": "Phil Stainer <philstainer.dev@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev:up": "docker-compose up",
+    "dev:down": "docker-compose down",
+    "dev:build": "docker-compose up --build --force-recreate",
+    "test:up": "docker-compose -f docker-compose.test.yml --env-file .env.test up",
+    "test:down": "docker-compose -f docker-compose.test.yml --env-file .env.test down",
+    "test:build": "docker-compose -f docker-compose.test.yml --env-file .env.test up --build --force-recreate"
+  }
+}

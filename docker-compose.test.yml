@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  frontend-test:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile.test
+    container_name: 'frontend-test'
+    depends_on:
+      - backend-test
+    volumes:
+      - ./frontend:/opt/app
+    environment:
+      PORT: ${FRONTEND_PORT}
+      NODE_ENV: ${NODE_ENV}
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+
+  backend-test:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile.test
+    container_name: 'backend-test'
+    depends_on:
+      - mongo-test
+    volumes:
+      - ./backend:/opt/app
+    environment:
+      BACKEND_PORT: ${BACKEND_PORT}
+      FRONTEND_PORT: ${FRONTEND_PORT}
+      MONGO_URL: mongodb://mongo:${MONGO_PORT}/${MONGO_INITDB_DATABASE}
+      NODE_ENV: ${NODE_ENV}
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+
+  mongo-test:
+    image: mongo:latest
+    restart: always
+    container_name: 'mongo-test'
+    ports:
+      - ${MONGO_PORT}:27017

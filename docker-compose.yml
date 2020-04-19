@@ -1,7 +1,9 @@
 version: '3.7'
 services:
   frontend:
-    build: './frontend'
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
     container_name: 'frontend'
     depends_on:
       - backend
@@ -13,7 +15,9 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
 
   backend:
-    build: './backend'
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
     container_name: 'backend'
     depends_on:
       - mongo
