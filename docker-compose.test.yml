@@ -27,7 +27,7 @@ services:
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
       FRONTEND_PORT: ${FRONTEND_PORT}
-      MONGO_URL: mongodb://mongo:${MONGO_PORT}/${MONGO_INITDB_DATABASE}
+      MONGO_URL: mongodb://mongo-test:${MONGO_PORT}/${MONGO_INITDB_DATABASE}
       NODE_ENV: ${NODE_ENV}
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
@@ -37,4 +37,4 @@ services:
     restart: always
     container_name: 'mongo-test'
     ports:
-      - ${MONGO_PORT}:27017
+      - '${MONGO_PORT}:${MONGO_PORT}'

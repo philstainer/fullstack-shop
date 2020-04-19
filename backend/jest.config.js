@@ -4,7 +4,11 @@ module.exports = {
   coveragePathIgnorePatterns: [
     '/node_modules/',
     '/models/',
-    '/graphql/',
+    '/typeDefs/',
+    '/resolvers/index',
+    'schema',
+    'apolloServer',
+    'createTestClient',
     '.config',
     '/coverage/',
     'app',

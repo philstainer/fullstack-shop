@@ -1,6 +1,7 @@
 'use strict'
 
 import '@babel/polyfill'
+import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 
 // Programming error
 process.on('uncaughtException', (err) => {
@@ -10,19 +11,13 @@ process.on('uncaughtException', (err) => {
   process.exit(1)
 })
 
-import mongoose from 'mongoose'
-
 import app from '#root/app'
 
 let server
 
   // prettier-ignore
 ;(async () => {
-  await mongoose.connect(process.env.MONGO_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  await dbConnect()
 
   server = await app.listen(process.env.BACKEND_PORT)
 
@@ -34,7 +29,7 @@ let server
 const shutdown = async () => {
   await server?.close()
 
-  await mongoose?.disconnect()
+  await dbDisconnect()
 
   process.exit(1)
 }
