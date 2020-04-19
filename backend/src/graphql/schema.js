@@ -1,3 +1,5 @@
+'use strict'
+
 import {makeExecutableSchema} from 'apollo-server-express'
 
 import resolvers from './resolvers'

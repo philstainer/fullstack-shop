@@ -1,5 +1,7 @@
-import User from '#root/models/User'
+'use strict'
 
-const context = (req) => ({...req, db: {User}})
+import models from '#root/models'
+
+const context = (req) => ({...req, db: models})
 
 export default context

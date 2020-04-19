@@ -1,3 +1,5 @@
+'use strict'
+
 import {ApolloServer} from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import express from 'express'
@@ -8,17 +10,21 @@ import context from '#root/graphql/context'
 
 // import formatGraphQLErrors from '#root/helpers/formatGraphQLErrors'
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 const apolloServer = new ApolloServer({
   // formatError: formatGraphQLErrors,
   schema,
   context,
+  playground: !isProduction,
 })
 
 const app = express()
 
-// Only use morgan in development
-if (process.env.NODE_ENV !== 'development') {
+// Setup logging and debug mode
+if (!isProduction) {
   app.use(require('morgan')('dev'))
+  require('mongoose').set('debug', true)
 }
 
 app.use(cookieParser())
