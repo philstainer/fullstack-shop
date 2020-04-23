@@ -22,7 +22,9 @@ let server
   server = await app.listen(process.env.BACKEND_PORT)
 
   console.log(
-    `Server listening on port http://localhost:${server?.address()?.port}`,
+    `Server listening on port http://localhost:${
+      server?.address()?.port
+    }/graphql`,
   )
 })()
 

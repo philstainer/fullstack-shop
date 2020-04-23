@@ -1,7 +1,7 @@
 'use strict'
 
 import context from '#root/graphql/context'
-import models from '#root/models'
+import * as models from '#root/models'
 
 const req = {userId: '123'}
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import models from '#root/models'
+import * as models from '#root/models'
 
 const context = (req) => ({...req, db: models})
 
