@@ -37,9 +37,9 @@ test('throws error if already logged in', async () => {
 
   const context = {req: {userId: 123}}
 
-  const result = await graphqlCall(SIGNUP_MUTATION, context, variables)
+  const {errors} = await graphqlCall(SIGNUP_MUTATION, context, variables)
 
-  expect(result.errors[0].message).toMatch(/already logged in/i)
+  expect(errors[0].message).toMatch(/already logged in/i)
 })
 
 test('throws validation error when it fails to validate input', async () => {
@@ -52,11 +52,11 @@ test('throws validation error when it fails to validate input', async () => {
 
   const context = {req: {}}
 
-  const result = await graphqlCall(SIGNUP_MUTATION, context, variables)
+  const {errors} = await graphqlCall(SIGNUP_MUTATION, context, variables)
 
-  expect(result.errors[0].message).toMatch(/email/i)
-  expect(result.errors[0].message).toMatch(/password/i)
-  expect(result.errors[0].message).toMatch(/confirm password/i)
+  expect(errors[0].message).toMatch(/email/i)
+  expect(errors[0].message).toMatch(/password/i)
+  expect(errors[0].message).toMatch(/confirm password/i)
 })
 
 test('successfully signs up when validate', async () => {
@@ -76,11 +76,12 @@ test('successfully signs up when validate', async () => {
     },
   }
 
-  const result = await graphqlCall(SIGNUP_MUTATION, context, variables)
+  const {data} = await graphqlCall(SIGNUP_MUTATION, context, variables)
 
   expect(cookie).toHaveBeenCalled()
-  expect(result.data.signUp._id).toBeTruthy()
-  expect(result.data.signUp.name).toBe(variables.name)
+  expect(data.signUp).toHaveProperty('_id')
+  expect(data.signUp).toHaveProperty('name', variables.name)
+  expect(data.signUp).not.toHaveProperty('email')
 
   await user.deleteMany({})
 })
