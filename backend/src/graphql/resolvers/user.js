@@ -42,6 +42,13 @@ const resolvers = {
 
       return createdUser
     },
+    signOut: (parent, args, ctx, info) => {
+      isAuthenticated(ctx)
+
+      ctx.res.clearCookie('token')
+
+      return {status: 'Success', message: 'See you soon'}
+    },
   },
 }
 

@@ -11,6 +11,11 @@ const root = gql`
   type Mutation {
     _empty: String
   }
+
+  type Status {
+    status: String
+    message: String
+  }
 `
 
 const typeDefs = [root, user]

@@ -14,6 +14,7 @@ const typeDefs = gql`
       password: String!
       confirmPassword: String!
     ): User!
+    signOut: Status
   }
 
   type User {
