@@ -1,11 +1,11 @@
 'use strict'
 
 import bcrypt from 'bcryptjs'
-import jwt from 'jsonwebtoken'
 
 import isAuthenticated from '#root/utils/isAuthenticated'
 import {signUpSchema} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
+import generateUserCookie from '#root/utils/generateUserCookie'
 
 const resolvers = {
   Query: {
@@ -31,14 +31,8 @@ const resolvers = {
       // Create user
       const createdUser = await ctx.db.user.create({...args, password})
 
-      // Create token
-      const token = jwt.sign({sub: createdUser.id}, process.env.JWT_SECRET)
-
-      // Set token for 365 days
-      ctx.res.cookie('token', token, {
-        httpOnly: true,
-        maxAge: 1000 * 60 * 60 * 24 * 365,
-      })
+      // Generate Cookie
+      generateUserCookie(createdUser, ctx)
 
       return createdUser
     },
@@ -48,6 +42,24 @@ const resolvers = {
       ctx.res.clearCookie('token')
 
       return {status: 'Success', message: 'See you soon'}
+    },
+    signIn: async (parent, {email, password}, ctx, info) => {
+      const errorMessage = 'Incorrect email or password'
+
+      // Check user
+      const foundUser = await ctx.db.user.findOne({email}).lean()
+
+      if (!foundUser) throw new Error(errorMessage)
+
+      // Check password
+      const isValid = await bcrypt.compare(password, foundUser.password)
+
+      if (!isValid) throw new Error(errorMessage)
+
+      // Generate Cookie
+      generateUserCookie(foundUser, ctx)
+
+      return foundUser
     },
   },
 }
