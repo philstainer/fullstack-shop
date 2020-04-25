@@ -1,4 +1,4 @@
-FROM node:13-slim
+FROM node:14-slim
 
 COPY . /opt/app
 

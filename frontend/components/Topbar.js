@@ -6,7 +6,7 @@ const StyledTopbar = styled.div`
   display: grid;
   justify-content: end;
   border-bottom: 1px solid ${(props) => props.theme.light_grey};
-  padding: 0 20px;
+  padding: 0 2rem;
   font-size: 1.2rem;
 
   ul {

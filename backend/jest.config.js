@@ -1,18 +1,5 @@
 module.exports = {
-  collectCoverageFrom: ['**/*.{js,jsx,ts,tsx}'],
-
-  coveragePathIgnorePatterns: [
-    '/node_modules/',
-    '/models/',
-    '/typeDefs/',
-    '/resolvers/index',
-    'schema',
-    'apolloServer',
-    'createTestClient',
-    '.config',
-    '/coverage/',
-    'app',
-    'src/index',
-  ],
+  collectCoverage: true,
+  testRegex: '(/__tests__/.*-test|(\\.|/)(test|spec))\\.jsx?$',
   testEnvironment: 'node',
 }

@@ -5,6 +5,7 @@ import express from 'express'
 import cors from 'cors'
 
 import apolloServer from '#root/graphql/apolloServer'
+import verifyToken from '#root/utils/verifyToken'
 
 // import formatGraphQLErrors from '#root/helpers/formatGraphQLErrors'
 
@@ -19,6 +20,8 @@ if (!isProduction) {
 }
 
 app.use(cookieParser())
+
+app.use(verifyToken)
 
 app.use(
   cors({

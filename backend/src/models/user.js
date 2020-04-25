@@ -12,7 +12,7 @@ const UserSchema = new Schema(
       lowercase: true,
       unique: true,
     },
-    passwordHash: {
+    password: {
       type: String,
       required: [true, 'Please provide a password'],
     },

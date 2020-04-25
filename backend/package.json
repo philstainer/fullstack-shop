@@ -11,6 +11,7 @@
     "@babel/core": "^7.9.0",
     "@babel/polyfill": "^7.8.7",
     "@babel/preset-env": "^7.9.5",
+    "@hapi/joi": "^17.1.1",
     "apollo-server-express": "^2.12.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "bcryptjs": "^2.4.3",
@@ -25,10 +26,9 @@
     "stripe": "^8.43.0"
   },
   "devDependencies": {
-    "apollo-server-testing": "^2.12.0",
     "babel-watch": "^7.0.0",
+    "graphql": "^15.0.0",
     "jest": "^25.3.0",
-    "morgan": "^1.10.0",
-    "supertest": "^4.0.2"
+    "morgan": "^1.10.0"
   }
 }

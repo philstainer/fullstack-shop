@@ -1,22 +1,11 @@
 'use strict'
 
 import merge from 'lodash.merge'
-import graphqlFields from 'graphql-fields'
 
-const _empty = {
-  Query: {
-    me: async (parent, args, ctx, info) => {
-      const topLevelFields = Object.keys(graphqlFields(info)).join(' ')
+import user from '#root/graphql/resolvers/user'
 
-      const users = await ctx.db.user.find({}).select(topLevelFields).lean()
+const root = {}
 
-      console.log(users)
-
-      return users[0]
-    },
-  },
-}
-
-const resolvers = merge(_empty)
+const resolvers = merge(root, user)
 
 export default resolvers

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import styled, {ThemeProvider, createGlobalStyle} from 'styled-components'
-import Meta from './Meta'
-import Header from './Header'
+import Meta from '#root/components/Meta'
+import Header from '#root/components/Header'
 
 const theme = {
   red: '#FF0000',

@@ -1,20 +1,18 @@
 'use strict'
 
 import {gql} from 'apollo-server-express'
+import user from '#root/graphql/typeDefs/user'
 
-const Query = gql`
+const root = gql`
   type Query {
     _empty: String
-    me: User
   }
 
-  type User {
-    _id: ID!
-    name: String!
-    email: String!
+  type Mutation {
+    _empty: String
   }
 `
 
-const typeDefs = [Query]
+const typeDefs = [root, user]
 
 export default typeDefs

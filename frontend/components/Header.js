@@ -2,10 +2,10 @@ import React from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 
-import Topbar from './Topbar'
-import Search from './Search'
-import Actions from './Actions'
-import Cart from './Cart'
+import Topbar from '#root/components/Topbar'
+import Search from '#root/components/Search'
+import Actions from '#root/components/Actions'
+import Cart from '#root/components/Cart'
 
 const StyledMiddleBar = styled.div`
   display: grid;
