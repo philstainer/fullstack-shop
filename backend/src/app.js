@@ -4,10 +4,8 @@ import cookieParser from 'cookie-parser'
 import express from 'express'
 import cors from 'cors'
 
-import apolloServer from '#root/graphql/apolloServer'
 import verifyToken from '#root/utils/verifyToken'
-
-// import formatGraphQLErrors from '#root/helpers/formatGraphQLErrors'
+import apolloServer from '#root/graphql/apolloServer'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -23,12 +21,7 @@ app.use(cookieParser())
 
 app.use(verifyToken)
 
-app.use(
-  cors({
-    credentials: true,
-    origin: `http://localhost:${process.env.FRONTEND_PORT}`,
-  }),
-)
+app.use(cors({credentials: true, origin: process.env.FRONTEND_URL}))
 
 apolloServer.applyMiddleware({app, cors: false, path: '/graphql'})
 

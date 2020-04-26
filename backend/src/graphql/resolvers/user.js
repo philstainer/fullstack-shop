@@ -6,6 +6,8 @@ import isAuthenticated from '#root/utils/isAuthenticated'
 import {signUpSchema} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
+import {transport, basicTemplate} from '#root/utils/mail'
+import generateTokenWithExpiry from '#root/utils/generateTokenWithExpiry'
 
 const resolvers = {
   Query: {
@@ -28,8 +30,26 @@ const resolvers = {
       // Hash password
       const password = await bcrypt.hash(args.password, 10)
 
+      // Generate Confirm account token
+      const {token, tokenExpiry} = await generateTokenWithExpiry()
+
       // Create user
-      const createdUser = await ctx.db.user.create({...args, password})
+      const createdUser = await ctx.db.user.create({
+        ...args,
+        password,
+        confirmToken: token,
+        confirmTokenExpiry: tokenExpiry,
+      })
+
+      // Send confirm account email
+      await transport.sendMail({
+        from: 'noreply@fullstackshop.com',
+        to: createdUser.email,
+        subject: 'Please confirm your account!',
+        html: basicTemplate(`Confirm your account with us!
+          \n\n
+          <a href="${process.env.FRONTEND_URL}/confirm?confirmToken=${token}">Click here to confirm</a>`),
+      })
 
       // Generate Cookie
       generateUserCookie(createdUser, ctx)

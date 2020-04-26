@@ -16,6 +16,12 @@ const UserSchema = new Schema(
       type: String,
       required: [true, 'Please provide a password'],
     },
+    confirmed: {
+      type: Boolean,
+      default: false,
+    },
+    confirmToken: String,
+    confirmTokenExpiry: Number,
     resetToken: String,
     resetTokenExpiry: Number,
     permissions: {

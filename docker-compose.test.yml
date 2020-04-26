@@ -26,10 +26,14 @@ services:
       - ./backend:/opt/app
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
-      FRONTEND_PORT: ${FRONTEND_PORT}
+      FRONTEND_URL: ${FRONTEND_URL}
       JWT_SECRET: ${JWT_SECRET}
       MONGO_URL: mongodb://mongo-test:${MONGO_PORT}/${MONGO_INITDB_DATABASE}
       NODE_ENV: ${NODE_ENV}
+      MAIL_HOST: ${MAIL_HOST}
+      MAIL_PORT: ${MAIL_PORT}
+      MAIL_USER: ${MAIL_USER}
+      MAIL_PASS: ${MAIL_PASS}
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
 

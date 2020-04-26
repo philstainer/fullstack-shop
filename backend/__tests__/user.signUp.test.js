@@ -2,6 +2,7 @@
 
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
+import {transport} from '#root/utils/mail'
 
 import {user} from '#root/models'
 
@@ -76,7 +77,16 @@ test('successfully signs up when validate', async () => {
     },
   }
 
+  transport.sendMail = jest.fn()
+
   const {data} = await graphqlCall(SIGNUP_MUTATION, context, variables)
+
+  expect(transport.sendMail).toHaveBeenCalledWith(
+    expect.objectContaining({
+      subject: 'Please confirm your account!',
+      to: variables.email,
+    }),
+  )
 
   expect(cookie).toHaveBeenCalled()
   expect(data.signUp).toHaveProperty('_id')
@@ -84,4 +94,5 @@ test('successfully signs up when validate', async () => {
   expect(data.signUp).not.toHaveProperty('email')
 
   await user.deleteMany({})
+  transport.sendMail.mockReset()
 })
