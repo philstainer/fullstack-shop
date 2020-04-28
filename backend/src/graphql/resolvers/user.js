@@ -7,7 +7,7 @@ import {signUpSchema} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
 import {transport, basicTemplate} from '#root/utils/mail'
-import generateTokenWithExpiry from '#root/utils/generateTokenWithExpiry'
+import generateToken from '#root/utils/generateToken'
 
 const resolvers = {
   Query: {
@@ -31,14 +31,15 @@ const resolvers = {
       const password = await bcrypt.hash(args.password, 10)
 
       // Generate Confirm account token
-      const {token, tokenExpiry} = await generateTokenWithExpiry()
+      const token = await generateToken()
 
       // Create user
+      // hour * minute * second * millisecond
       const createdUser = await ctx.db.user.create({
         ...args,
         password,
         confirmToken: token,
-        confirmTokenExpiry: tokenExpiry,
+        confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
       })
 
       // Send confirm account email
@@ -80,6 +81,26 @@ const resolvers = {
       generateUserCookie(foundUser, ctx)
 
       return foundUser
+    },
+    confirmAccount: async (parent, {confirmToken}, ctx, info) => {
+      const errorMessage = 'Token invalid or expired'
+
+      const foundUser = await ctx.db.user.findOne({
+        confirmToken,
+        confirmTokenExpiry: {$gte: Date.now()}, // Confirm token expiry > Date.now
+      })
+
+      if (!foundUser) throw new Error(errorMessage)
+
+      await ctx.db.user.findByIdAndUpdate(foundUser.id, {
+        confirmToken: null,
+        confirmTokenExpiry: null,
+      })
+
+      return {
+        status: 'Success',
+        message: 'Account has now been confirmed, please log in!',
+      }
     },
   },
 }

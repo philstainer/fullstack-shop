@@ -15,6 +15,7 @@ const SIGNIN_MUTATION = `
 `
 beforeAll(async () => await dbConnect())
 afterAll(async () => await dbDisconnect())
+afterEach(async () => await user.deleteMany({}))
 
 test('returns error when user not found', async () => {
   const variables = {
@@ -42,8 +43,6 @@ test('returns error password is invalid', async () => {
   const {errors} = await graphqlCall(SIGNIN_MUTATION, null, variables)
 
   expect(errors).toHaveLength(1)
-
-  await user.deleteMany()
 })
 
 test('returns user on success', async () => {
@@ -73,6 +72,4 @@ test('returns user on success', async () => {
   expect(data.signIn).toHaveProperty('_id')
   expect(data.signIn).toHaveProperty('email', variables.email)
   expect(data.signIn).not.toHaveProperty('name')
-
-  await user.deleteMany()
 })

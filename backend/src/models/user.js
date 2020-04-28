@@ -21,9 +21,9 @@ const UserSchema = new Schema(
       default: false,
     },
     confirmToken: String,
-    confirmTokenExpiry: Number,
+    confirmTokenExpiry: Date,
     resetToken: String,
-    resetTokenExpiry: Number,
+    resetTokenExpiry: Date,
     permissions: {
       type: [String],
       enum: [

@@ -7,7 +7,7 @@ const generateUserCookie = (user, ctx) => {
   // Set token for 365 days
   ctx.res.cookie('token', token, {
     httpOnly: true,
-    maxAge: 1000 * 60 * 60 * 24 * 365,
+    maxAge: 365 * 24 * 60 * 60 * 1000,
   })
 }
 

@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "babel-watch -L src/index.js",
-    "test": "jest --watchAll"
+    "test": "jest --watch --runInBand"
   },
   "dependencies": {
     "@babel/core": "^7.9.0",

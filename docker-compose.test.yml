@@ -8,12 +8,16 @@ services:
     depends_on:
       - backend-test
     volumes:
-      - ./frontend:/opt/app
+      - './frontend:/app/frontend'
+      - './frontend/node_modules/'
+      - './.git:/app/.git'
     environment:
       PORT: ${FRONTEND_PORT}
       NODE_ENV: ${NODE_ENV}
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    tty: true
+    stdin_open: false
 
   backend-test:
     build:
@@ -23,7 +27,9 @@ services:
     depends_on:
       - mongo-test
     volumes:
-      - ./backend:/opt/app
+      - './backend:/app/backend'
+      - './backend/node_modules/'
+      - './.git:/app/.git'
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
       FRONTEND_URL: ${FRONTEND_URL}
@@ -36,6 +42,8 @@ services:
       MAIL_PASS: ${MAIL_PASS}
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}
+    tty: true
+    stdin_open: false
 
   mongo-test:
     image: mongo:latest

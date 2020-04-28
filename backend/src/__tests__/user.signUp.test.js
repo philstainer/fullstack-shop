@@ -27,6 +27,7 @@ const SIGNUP_MUTATION = `
 
 beforeAll(async () => await dbConnect())
 afterAll(async () => await dbDisconnect())
+afterEach(async () => await user.deleteMany({}))
 
 test('throws error if already logged in', async () => {
   const variables = {
@@ -93,6 +94,5 @@ test('successfully signs up when validate', async () => {
   expect(data.signUp).toHaveProperty('name', variables.name)
   expect(data.signUp).not.toHaveProperty('email')
 
-  await user.deleteMany({})
   transport.sendMail.mockReset()
 })

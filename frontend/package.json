@@ -7,7 +7,7 @@
     "dev": "next -p $PORT",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watchAll"
+    "test": "jest --watch"
   },
   "dependencies": {
     "next": "^9.3.5",

@@ -17,6 +17,7 @@ const ME_QUERY = `
 
 beforeAll(async () => await dbConnect())
 afterAll(async () => await dbDisconnect())
+afterEach(async () => await user.deleteMany({}))
 
 test('returns user details when logged in', async () => {
   const newUser = await user.create({
@@ -35,6 +36,4 @@ test('returns user details when logged in', async () => {
   expect(data.me).toHaveProperty('_id')
   expect(data.me).toHaveProperty('name', newUser.name)
   expect(data.me).toHaveProperty('email', newUser.email)
-
-  await user.deleteMany({})
 })

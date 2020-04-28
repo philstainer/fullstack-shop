@@ -1,6 +1,5 @@
 'use strict'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
 const SIGNOUT_MUTATION = `

@@ -1,8 +1,15 @@
 FROM node:14-slim
 
-COPY . /opt/app
+RUN apt-get update && apt-get install -yq git
 
-WORKDIR /opt/app
+WORKDIR /app/backend
+
+# To use packages in CLI without global install
+ENV PATH /app/backend/node_modules/.bin:$PATH
+
+COPY . .
+
+ENV GIT_WORK_TREE=/app/backend GIT_DIR=/app/.git
 
 RUN yarn
 
