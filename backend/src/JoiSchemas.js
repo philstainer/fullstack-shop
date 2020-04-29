@@ -18,3 +18,4 @@ export const confirmPassword = Joi.any()
   .messages({'any.only': '"password" and "confirm password" do not match'})
 
 export const signUpSchema = Joi.object({name, email, password, confirmPassword})
+export const requestReset = Joi.object({email})

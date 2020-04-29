@@ -3,7 +3,7 @@
 import bcrypt from 'bcryptjs'
 
 import isAuthenticated from '#root/utils/isAuthenticated'
-import {signUpSchema} from '#root/JoiSchemas'
+import {signUpSchema, requestReset} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
 import {transport, basicTemplate} from '#root/utils/mail'
@@ -112,7 +112,7 @@ const resolvers = {
 
       const foundUser = await ctx.db.user
         .findById(ctx.req.userId)
-        .select('confirmed')
+        .select('confirmed email')
         .lean()
 
       if (!foundUser) throw new Error('Problem with requesting confirm token')
@@ -123,22 +123,15 @@ const resolvers = {
       const token = await generateToken()
 
       // Create user
-      const updatedUser = await ctx.db.user
-        .findByIdAndUpdate(
-          ctx.req.userId,
-          {
-            confirmToken: token,
-            confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
-          },
-          {new: true},
-        )
-        .select('email')
-        .lean()
+      await ctx.db.user.findByIdAndUpdate(ctx.req.userId, {
+        confirmToken: token,
+        confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
+      })
 
       // Send confirm account email
       await transport.sendMail({
         from: 'noreply@fullstackshop.com',
-        to: updatedUser.email,
+        to: foundUser.email,
         subject: 'Please confirm your account!',
         html: basicTemplate(`Confirm your account with us!
           \n\n
@@ -149,6 +142,43 @@ const resolvers = {
         status: 'Success',
         message: 'Email sent! please confirm your account',
       }
+    },
+    requestReset: async (parent, {email}, ctx, info) => {
+      // Check logged in
+      if (ctx?.req?.userId) throw new Error('You are already logged in!')
+
+      // Validate input
+      await requestReset.validateAsync({email})
+
+      const successObject = {
+        status: 'Success',
+        message: 'Email sent to your account',
+      }
+
+      const user = await ctx.db.user.findOne({email}).select('_id').lean()
+
+      if (user) {
+        // Generate Confirm account token
+        const token = await generateToken()
+
+        // Create user
+        await ctx.db.user.findByIdAndUpdate(user._id, {
+          resetToken: token,
+          resetTokenExpiry: Date.now() + 15 * 60 * 1000,
+        })
+
+        // Send confirm account email
+        await transport.sendMail({
+          from: 'noreply@fullstackshop.com',
+          to: email,
+          subject: 'Your Password Reset Token',
+          html: basicTemplate(`Your Password Reset Token is here!
+    \n\n
+    <a href="${process.env.FRONTEND_URL}/reset?resetToken=${token}">Click here to Reset</a>`),
+        })
+      }
+
+      return successObject
     },
   },
 }

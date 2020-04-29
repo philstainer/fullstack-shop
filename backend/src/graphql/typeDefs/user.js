@@ -18,6 +18,7 @@ const typeDefs = gql`
     signIn(email: String!, password: String!): User!
     confirmAccount(confirmToken: String!): Status
     requestConfirm: Status
+    requestReset(email: String!): Status
   }
 
   type User {
