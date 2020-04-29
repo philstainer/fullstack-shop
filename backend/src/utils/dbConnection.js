@@ -7,6 +7,7 @@ const dbConnect = () =>
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
 
 const dbDisconnect = mongoose.disconnect

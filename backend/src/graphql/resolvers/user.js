@@ -85,21 +85,69 @@ const resolvers = {
     confirmAccount: async (parent, {confirmToken}, ctx, info) => {
       const errorMessage = 'Token invalid or expired'
 
-      const foundUser = await ctx.db.user.findOne({
-        confirmToken,
-        confirmTokenExpiry: {$gte: Date.now()}, // Confirm token expiry > Date.now
-      })
+      const foundUser = await ctx.db.user
+        .findOne({
+          confirmToken,
+          confirmTokenExpiry: {$gte: Date.now()}, // Confirm token expiry > Date.now
+        })
+        .select('_id')
+        .lean()
 
       if (!foundUser) throw new Error(errorMessage)
 
-      await ctx.db.user.findByIdAndUpdate(foundUser.id, {
-        confirmToken: null,
-        confirmTokenExpiry: null,
-      })
+      await ctx.db.user
+        .findByIdAndUpdate(foundUser.id, {
+          confirmToken: null,
+          confirmTokenExpiry: null,
+        })
+        .lean()
 
       return {
         status: 'Success',
         message: 'Account has now been confirmed, please log in!',
+      }
+    },
+    requestConfirm: async (parents, args, ctx, info) => {
+      isAuthenticated(ctx)
+
+      const foundUser = await ctx.db.user
+        .findById(ctx.req.userId)
+        .select('confirmed')
+        .lean()
+
+      if (!foundUser) throw new Error('Problem with requesting confirm token')
+      if (foundUser?.confirmed)
+        throw new Error('Account has already been confirmed')
+
+      // Generate Confirm account token
+      const token = await generateToken()
+
+      // Create user
+      const updatedUser = await ctx.db.user
+        .findByIdAndUpdate(
+          ctx.req.userId,
+          {
+            confirmToken: token,
+            confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
+          },
+          {new: true},
+        )
+        .select('email')
+        .lean()
+
+      // Send confirm account email
+      await transport.sendMail({
+        from: 'noreply@fullstackshop.com',
+        to: updatedUser.email,
+        subject: 'Please confirm your account!',
+        html: basicTemplate(`Confirm your account with us!
+          \n\n
+          <a href="${process.env.FRONTEND_URL}/confirm?confirmToken=${token}">Click here to confirm</a>`),
+      })
+
+      return {
+        status: 'Success',
+        message: 'Email sent! please confirm your account',
       }
     },
   },

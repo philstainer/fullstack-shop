@@ -9,7 +9,6 @@ services:
       - backend-test
     volumes:
       - './frontend:/app/frontend'
-      - './frontend/node_modules/'
       - './.git:/app/.git'
     environment:
       PORT: ${FRONTEND_PORT}
@@ -28,7 +27,6 @@ services:
       - mongo-test
     volumes:
       - './backend:/app/backend'
-      - './backend/node_modules/'
       - './.git:/app/.git'
     environment:
       BACKEND_PORT: ${BACKEND_PORT}
