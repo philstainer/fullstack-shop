@@ -17,5 +17,12 @@ export const confirmPassword = Joi.any()
   .valid(Joi.ref('password'))
   .messages({'any.only': '"password" and "confirm password" do not match'})
 
+export const token = Joi.string().hex().required()
+
 export const signUpSchema = Joi.object({name, email, password, confirmPassword})
 export const requestReset = Joi.object({email})
+export const resetPassword = Joi.object({
+  resetToken: token,
+  password,
+  confirmPassword,
+})

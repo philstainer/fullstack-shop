@@ -3,7 +3,7 @@
 import bcrypt from 'bcryptjs'
 
 import isAuthenticated from '#root/utils/isAuthenticated'
-import {signUpSchema, requestReset} from '#root/JoiSchemas'
+import {signUpSchema, requestReset, resetPassword} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
 import {transport, basicTemplate} from '#root/utils/mail'
@@ -67,8 +67,13 @@ const resolvers = {
     signIn: async (parent, {email, password}, ctx, info) => {
       const errorMessage = 'Incorrect email or password'
 
+      const selected = selectedFields(info)
+
       // Check user
-      const foundUser = await ctx.db.user.findOne({email}).lean()
+      const foundUser = await ctx.db.user
+        .findOne({email})
+        .select(`${selected} password`)
+        .lean()
 
       if (!foundUser) throw new Error(errorMessage)
 
@@ -122,7 +127,7 @@ const resolvers = {
       // Generate Confirm account token
       const token = await generateToken()
 
-      // Create user
+      // Update user
       await ctx.db.user.findByIdAndUpdate(ctx.req.userId, {
         confirmToken: token,
         confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
@@ -161,7 +166,7 @@ const resolvers = {
         // Generate Confirm account token
         const token = await generateToken()
 
-        // Create user
+        // Update user
         await ctx.db.user.findByIdAndUpdate(user._id, {
           resetToken: token,
           resetTokenExpiry: Date.now() + 15 * 60 * 1000,
@@ -179,6 +184,43 @@ const resolvers = {
       }
 
       return successObject
+    },
+    resetPassword: async (parent, args, ctx, info) => {
+      // Validate input
+      await resetPassword.validateAsync(args, {abortEarly: false})
+
+      const foundUser = await ctx.db.user
+        .findOne({
+          resetToken: args.resetToken,
+          resetTokenExpiry: {$gte: Date.now()}, // Confirm token expiry > Date.now
+        })
+        .select('_id')
+        .lean()
+
+      if (!foundUser) throw new Error('Token invalid or expired')
+
+      const selected = selectedFields(info)
+
+      // Hash password
+      const password = await bcrypt.hash(args.password, 10)
+
+      // Update user
+      const updatedUser = await ctx.db.user
+        .findByIdAndUpdate(
+          foundUser._id,
+          {
+            password,
+            resetToken: null,
+            resetTokenExpiry: null,
+          },
+          {new: true},
+        )
+        .select(selected)
+        .lean()
+
+      generateUserCookie(updatedUser, ctx)
+
+      return updatedUser
     },
   },
 }

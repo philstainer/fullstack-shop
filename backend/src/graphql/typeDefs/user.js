@@ -19,6 +19,11 @@ const typeDefs = gql`
     confirmAccount(confirmToken: String!): Status
     requestConfirm: Status
     requestReset(email: String!): Status
+    resetPassword(
+      resetToken: String!
+      password: String!
+      confirmPassword: String!
+    ): User
   }
 
   type User {
