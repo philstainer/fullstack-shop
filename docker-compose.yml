@@ -11,6 +11,7 @@ services:
       - ./frontend:/opt/app
     environment:
       PORT: ${FRONTEND_PORT}
+      BACKEND_URL: ${BACKEND_URL}
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
 

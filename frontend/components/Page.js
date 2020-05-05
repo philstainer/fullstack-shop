@@ -2,11 +2,15 @@ import React, {Component} from 'react'
 import styled, {ThemeProvider, createGlobalStyle} from 'styled-components'
 import Meta from '#root/components/Meta'
 import Header from '#root/components/Header'
+import AuthModal from '#root/components/AuthModal'
 
 const theme = {
-  red: '#FF0000',
-  black: '#393939',
-  light_grey: '#efefef',
+  white: '#f1faee',
+  red: '#e63946',
+  highlight: '#228CDB',
+  text: '#2B303A',
+  border: '#efefef',
+  border_2: '#dcdcda',
   grey: '#787878',
   maxWidth: '1000px',
 }
@@ -54,11 +58,20 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.5rem;
     line-height: 2;
     font-family: 'Open Sans', sans-serif;
+    color: ${theme.text}
   }
 
   a {
     text-decoration: none;
-    color: ${theme.black};
+    color: ${theme.text};
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font-family: inherit;
+    color: inherit;
   }
 `
 
@@ -70,6 +83,8 @@ class Page extends Component {
           <Meta />
           <GlobalStyle />
           <Header />
+          <AuthModal />
+
           <Inner>{this.props.children}</Inner>
         </StyledPage>
       </ThemeProvider>

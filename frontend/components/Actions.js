@@ -1,42 +1,41 @@
 import React from 'react'
-import styled from 'styled-components'
 import Link from 'next/link'
+import {useQuery, useMutation} from '@apollo/react-hooks'
 
-const StyledActions = styled.ul`
-  list-style: none;
-  display: flex;
-  font-size: 1rem;
-  text-transform: uppercase;
-
-  li {
-    display: flex;
-    padding: 1rem;
-  }
-
-  a {
-    color: ${(props) => props.theme.grey};
-    transition: color 0.2s linear;
-
-    &:hover {
-      color: inherit;
-    }
-  }
-`
+import ME_QUERY from '#root/graphql/me.query'
+import {AUTH_MODAL_MUTATION} from '#root/graphql/localResolvers'
+import StyledActions from '#root/components/styles/StyledActions'
 
 const Actions = () => {
+  const {data, loading, error} = useQuery(ME_QUERY)
+  const [toggleAuthModal] = useMutation(AUTH_MODAL_MUTATION)
+
+  // if (error) return <div>Error fetching user details...</div>
+  if (loading && !data) return <div>Loading user details...</div>
+
   return (
     <StyledActions>
-      <li>
-        <Link href="/sell">
-          <a>Sell</a>
-        </Link>
-      </li>
+      {!data?.me && (
+        <li onClick={toggleAuthModal}>
+          <a>Sign In</a>
+        </li>
+      )}
 
-      <li>
-        <Link href="/account">
-          <a>Account</a>
-        </Link>
-      </li>
+      {data?.me && (
+        <React.Fragment>
+          <li>
+            <Link href="/sell">
+              <a>Sell</a>
+            </Link>
+          </li>
+
+          <li>
+            <Link href="/account">
+              <a>Account</a>
+            </Link>
+          </li>
+        </React.Fragment>
+      )}
     </StyledActions>
   )
 }

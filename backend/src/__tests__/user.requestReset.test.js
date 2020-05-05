@@ -64,7 +64,7 @@ test('returns success status when user not found', async () => {
   })
 
   const variables = {
-    email: fakeUser.email,
+    email: 'some@gmail.com',
   }
 
   const {data} = await graphqlCall(REQUEST_RESET_MUTATION, null, variables)
