@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-props-no-spreading */
+
 import App from 'next/app'
 import React from 'react'
 import {ApolloProvider} from '@apollo/react-hooks'

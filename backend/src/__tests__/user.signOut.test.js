@@ -1,5 +1,3 @@
-'use strict'
-
 import graphqlCall from '#root/utils/graphqlCall'
 
 const SIGNOUT_MUTATION = `

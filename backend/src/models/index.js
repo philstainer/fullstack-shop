@@ -1,5 +1,3 @@
-'use strict'
-
 export {default as user} from '#root/models/user'
 export {default as item} from '#root/models/item'
 export {default as order} from '#root/models/order'

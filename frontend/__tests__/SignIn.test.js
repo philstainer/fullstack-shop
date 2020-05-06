@@ -23,7 +23,7 @@ const mocks = [
 const localResolvers = {Mutation: {toggleAuthModal: jest.fn()}}
 
 test('renders sign in form', () => {
-  const {findByText, getByText} = render(
+  const {getByText} = render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <SignIn />
     </MockedProvider>,
@@ -39,7 +39,7 @@ test('renders sign in form', () => {
 })
 
 test('validates fields on submit', async () => {
-  const {findByText, getByText, debug} = render(
+  const {findByText, getByText} = render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <SignIn />
     </MockedProvider>,

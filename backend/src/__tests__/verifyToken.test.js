@@ -1,5 +1,3 @@
-'use strict'
-
 import verifyToken from '#root/utils/verifyToken'
 
 jest.mock('jsonwebtoken', () => {

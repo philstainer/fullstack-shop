@@ -17,7 +17,7 @@ const tabs = [
   {text: 'Sign Up', component: <SignUp />},
 ]
 
-const AuthModal = (props) => {
+const AuthModal = () => {
   const {data} = useQuery(AUTH_MODAL_QUERY)
   const [toggleAuthModal] = useMutation(AUTH_MODAL_MUTATION)
 

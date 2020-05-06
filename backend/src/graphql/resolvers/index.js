@@ -1,5 +1,3 @@
-'use strict'
-
 import merge from 'lodash.merge'
 
 import user from '#root/graphql/resolvers/user'

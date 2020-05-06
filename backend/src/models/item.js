@@ -1,5 +1,3 @@
-'use strict'
-
 import {Schema, model, Decimal128} from 'mongoose'
 
 const ItemSchema = new Schema(

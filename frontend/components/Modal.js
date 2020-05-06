@@ -3,27 +3,27 @@ import PropTypes from 'prop-types'
 
 import StyledModal from '#root/components/styles/StyledModal'
 
-const Modal = (props) => {
-  if (!props.isOpen) return null
+const Modal = ({isOpen, closeOnClick, handleClose, closeButton, children}) => {
+  if (!isOpen) return null
 
   return (
     <StyledModal
       data-testid="modal"
-      onMouseDown={props.closeOnClick ? props.handleClose : null}
+      onMouseDown={closeOnClick ? handleClose : null}
     >
       <StyledModal.Body
         data-testid="body"
-        onMouseDown={(e) => e.stopPropagation()}
+        onMouseDown={e => e.stopPropagation()}
       >
-        <React.Fragment>
-          {props.children}
-          {props.closeButton && (
+        <>
+          {children}
+          {closeButton && (
             <StyledModal.CloseButton
               data-testid="closeButton"
-              onClick={props.handleClose}
+              onClick={handleClose}
             />
           )}
-        </React.Fragment>
+        </>
       </StyledModal.Body>
     </StyledModal>
   )
@@ -33,6 +33,7 @@ Modal.defaultProps = {
   isOpen: false,
   closeOnClick: true,
   closeButton: true,
+  children: null,
 }
 
 Modal.propTypes = {
@@ -40,6 +41,10 @@ Modal.propTypes = {
   closeOnClick: PropTypes.bool,
   closeButton: PropTypes.bool,
   handleClose: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 }
 
 export default Modal

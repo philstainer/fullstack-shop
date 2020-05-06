@@ -1,5 +1,3 @@
-'use strict'
-
 import graphqlFields from 'graphql-fields'
 import selectedFields from '#root/utils/selectedFields'
 

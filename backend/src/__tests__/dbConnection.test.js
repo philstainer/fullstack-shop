@@ -1,5 +1,3 @@
-'use strict'
-
 import mongoose from 'mongoose'
 
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'

@@ -19,7 +19,7 @@ const SignUp = () => {
 
   const {register, handleSubmit, errors, watch} = useForm()
 
-  const onSubmit = async (variables) => {
+  const onSubmit = async variables => {
     await signUp({variables})
 
     toggleAuthModal()
@@ -91,7 +91,7 @@ const SignUp = () => {
             data-testid="confirmPassword"
             ref={register({
               required: 'You must confirm your password',
-              validate: (value) =>
+              validate: value =>
                 value === watch('password') || 'The passwords do not match',
             })}
           />

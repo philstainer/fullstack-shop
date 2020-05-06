@@ -1,5 +1,3 @@
-'use strict'
-
 import cookieParser from 'cookie-parser'
 import express from 'express'
 import cors from 'cors'
@@ -13,7 +11,10 @@ const app = express()
 
 // Setup logging and debug mode
 if (!isProduction) {
+  // eslint-disable-next-line
   app.use(require('morgan')('dev'))
+
+  // eslint-disable-next-line
   require('mongoose').set('debug', true)
 }
 

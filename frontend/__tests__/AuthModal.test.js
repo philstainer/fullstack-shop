@@ -1,9 +1,8 @@
-import {render, fireEvent, waitFor} from '@testing-library/react'
+import {render, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 
 import AuthModal from '#root/components/AuthModal'
-import {AUTH_MODAL_QUERY} from '#root/graphql/localResolvers'
 
 test('renders when authModal is true', async () => {
   const cache = new InMemoryCache()

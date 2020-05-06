@@ -1,5 +1,3 @@
-'use strict'
-
 import {Schema, model} from 'mongoose'
 
 const CartItemSchema = new Schema(

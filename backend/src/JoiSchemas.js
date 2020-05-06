@@ -1,5 +1,3 @@
-'use strict'
-
 import Joi from '@hapi/joi'
 
 export const name = Joi.string().min(3).max(30).required()

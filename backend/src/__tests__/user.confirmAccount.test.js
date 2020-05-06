@@ -1,5 +1,3 @@
-'use strict'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 import generateToken from '#root/utils/generateToken'
@@ -18,9 +16,9 @@ const CONFIRMACCOUNT_MUTATION = `
   }
 `
 
-beforeAll(async () => await dbConnect())
-afterAll(async () => await dbDisconnect())
-afterEach(async () => await user.deleteMany({}))
+beforeAll(() => dbConnect())
+afterAll(() => dbDisconnect())
+afterEach(() => user.deleteMany({}))
 
 const fakeUser = {
   name: 'Test',
@@ -31,7 +29,7 @@ const fakeUser = {
 test('returns error when user token not found', async () => {
   const token = await generateToken()
 
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
     confirmToken: 'token-wont-match',
     confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
@@ -49,7 +47,7 @@ test('returns error when user token not found', async () => {
 test('returns error when user token has expired', async () => {
   const token = await generateToken()
 
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
     confirmToken: token,
     confirmTokenExpiry: Date.now() - 1 * 60 * 60 * 1000,
@@ -67,7 +65,7 @@ test('returns error when user token has expired', async () => {
 test('returns message on success', async () => {
   const token = await generateToken()
 
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
     confirmToken: token,
     confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,

@@ -13,7 +13,7 @@ const StyledMiddleBar = styled.div`
   align-items: center;
   grid-column-gap: 1rem;
   padding: 0 2rem;
-  border-bottom: 1px solid ${(props) => props.theme.border};
+  border-bottom: 1px solid ${props => props.theme.border};
 `
 
 const Logo = styled.h1`
@@ -29,7 +29,7 @@ const Logo = styled.h1`
 
 const Header = () => {
   return (
-    <React.Fragment>
+    <>
       <Topbar />
 
       <StyledMiddleBar>
@@ -45,7 +45,7 @@ const Header = () => {
 
         <Cart />
       </StyledMiddleBar>
-    </React.Fragment>
+    </>
   )
 }
 

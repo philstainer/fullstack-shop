@@ -1,5 +1,3 @@
-'use strict'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 import {transport} from '#root/utils/mail'
@@ -25,9 +23,9 @@ const SIGNUP_MUTATION = `
   }
 `
 
-beforeAll(async () => await dbConnect())
-afterAll(async () => await dbDisconnect())
-afterEach(async () => await user.deleteMany({}))
+beforeAll(() => dbConnect())
+afterAll(() => dbDisconnect())
+afterEach(() => user.deleteMany({}))
 
 test('throws error if already logged in', async () => {
   const variables = {

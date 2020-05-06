@@ -1,5 +1,3 @@
-'use strict'
-
 import context from '#root/graphql/context'
 import * as models from '#root/models'
 

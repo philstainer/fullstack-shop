@@ -4,7 +4,7 @@ import '@babel/polyfill'
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 
 // Programming error
-process.on('uncaughtException', (err) => {
+process.on('uncaughtException', err => {
   console.log('UNHANDLED EXCEPTION! 💥 Shutting down...')
   console.log(err.name, err.message)
 
@@ -37,7 +37,7 @@ const shutdown = async () => {
 }
 
 // Error 3rd party
-process.on('unhandledRejection', (err) => {
+process.on('unhandledRejection', err => {
   console.log('UNHANDLED REJECTION! 💥 Shutting down...')
   console.log(err.name, err.message)
 

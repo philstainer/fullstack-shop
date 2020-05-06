@@ -1,5 +1,4 @@
-'use strict'
-
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {graphql} from 'graphql'
 import {makeExecutableSchema} from 'apollo-server-express'
 import merge from 'lodash.merge'

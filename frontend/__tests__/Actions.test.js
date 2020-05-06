@@ -3,7 +3,6 @@ import {MockedProvider} from '@apollo/react-testing'
 
 import Actions from '#root/components/Actions'
 import ME_QUERY from '#root/graphql/me.query'
-import {AUTH_MODAL_MUTATION} from '#root/graphql/localResolvers'
 import {fakeUser} from '#root/utils/testUtils'
 
 const notSignedInMocks = [

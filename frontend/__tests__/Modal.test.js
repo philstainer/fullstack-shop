@@ -9,7 +9,7 @@ test('renders null when isOpen prop is false', () => {
 })
 
 test('renders with defaults when isOpen prop is true', () => {
-  const {getByTestId} = render(<Modal isOpen={true} handleClose={() => {}} />)
+  const {getByTestId} = render(<Modal isOpen handleClose={() => {}} />)
 
   expect(getByTestId('modal')).toBeInTheDocument()
   expect(getByTestId('closeButton')).toBeInTheDocument()
@@ -18,9 +18,7 @@ test('renders with defaults when isOpen prop is true', () => {
 test('calls handleClose on mouseDown when closeOnClick prop is true', () => {
   const mockedHandleClose = jest.fn()
 
-  const {getByTestId} = render(
-    <Modal isOpen={true} handleClose={mockedHandleClose} />,
-  )
+  const {getByTestId} = render(<Modal isOpen handleClose={mockedHandleClose} />)
 
   fireEvent.mouseDown(getByTestId('modal'))
   fireEvent.mouseDown(getByTestId('body'))
@@ -32,11 +30,7 @@ test('does not call handleClose on mouseDown when closeOnClick prop is false', (
   const mockedHandleClose = jest.fn()
 
   const {getByTestId} = render(
-    <Modal
-      isOpen={true}
-      closeOnClick={false}
-      handleClose={mockedHandleClose}
-    />,
+    <Modal isOpen closeOnClick={false} handleClose={mockedHandleClose} />,
   )
 
   fireEvent.mouseDown(getByTestId('modal'))
@@ -47,9 +41,7 @@ test('does not call handleClose on mouseDown when closeOnClick prop is false', (
 test('calls handleClose on closeButton', () => {
   const mockedHandleClose = jest.fn()
 
-  const {getByTestId} = render(
-    <Modal isOpen={true} handleClose={mockedHandleClose} />,
-  )
+  const {getByTestId} = render(<Modal isOpen handleClose={mockedHandleClose} />)
 
   fireEvent.click(getByTestId('closeButton'))
 
@@ -58,7 +50,7 @@ test('calls handleClose on closeButton', () => {
 
 test('does not render closeButton when closeButton prop is false', () => {
   const {queryByTestId} = render(
-    <Modal isOpen={true} closeButton={false} handleClose={() => {}} />,
+    <Modal isOpen closeButton={false} handleClose={() => {}} />,
   )
 
   expect(queryByTestId('closeButton')).toBeNull()

@@ -1,5 +1,3 @@
-'use strict'
-
 import isAuthenticated from '#root/utils/isAuthenticated'
 
 test('throws error if not authenticated', () => {

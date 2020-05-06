@@ -1,5 +1,3 @@
-'use strict'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 import generateToken from '#root/utils/generateToken'
@@ -21,9 +19,9 @@ const RESET_PASSWORD_MUTATION = `
   }
 `
 
-beforeAll(async () => await dbConnect())
-afterAll(async () => await dbDisconnect())
-afterEach(async () => await user.deleteMany({}))
+beforeAll(() => dbConnect())
+afterAll(() => dbDisconnect())
+afterEach(() => user.deleteMany({}))
 
 const fakeUser = {
   name: 'Test',
@@ -48,7 +46,7 @@ test('returns error when it fails to validate input', async () => {
 test('returns error when token expired or invalid', async () => {
   const resetToken = await generateToken()
 
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
     resetToken,
     resetTokenExpiry: Date.now() - 15 * 60 * 1000,

@@ -1,5 +1,3 @@
-'use strict'
-
 import {ApolloServer} from 'apollo-server-express'
 
 import schema from '#root/graphql/schema'

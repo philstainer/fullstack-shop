@@ -1,8 +1,6 @@
-'use strict'
-
 import formatError from '#root/graphql/formatError'
 
-const NODE_ENV = process.env.NODE_ENV
+const {NODE_ENV} = process.env
 
 afterEach(() => {
   process.env.NODE_ENV = NODE_ENV

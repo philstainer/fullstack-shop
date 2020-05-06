@@ -1,16 +1,4 @@
-import styled, {keyframes} from 'styled-components'
-
-const loading = keyframes`
-  from {
-    background-position: 0 0;
-    /* rotate: 0; */
-  }
-
-  to {
-    background-position: 100% 100%;
-    /* rotate: 360deg; */
-  }
-`
+import styled from 'styled-components'
 
 const StyledForm = styled.form`
   font-size: 1.5rem;
@@ -24,7 +12,7 @@ const StyledForm = styled.form`
 
     p {
       font-size: 1rem;
-      color: ${(props) => props.theme.red};
+      color: ${props => props.theme.red};
       font-style: italic;
     }
   }
@@ -52,19 +40,19 @@ const StyledForm = styled.form`
     width: 100%;
     padding: 0.8rem;
     font-size: 1.2rem;
-    border: 1px solid ${(props) => props.theme.border_2};
+    border: 1px solid ${props => props.theme.border_2};
     border-radius: 2px;
 
     &:focus {
       outline: 0;
-      border-color: ${(props) => props.theme.red};
+      border-color: ${props => props.theme.red};
     }
   }
 
   button,
   input[type='submit'] {
     width: 100%;
-    background: ${(props) => props.theme.highlight};
+    background: ${props => props.theme.highlight};
     color: white;
     border: 0;
     font-size: 1.5rem;

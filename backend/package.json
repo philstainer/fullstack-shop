@@ -8,11 +8,11 @@
     "test": "./node_modules/.bin/jest --watch --runInBand"
   },
   "dependencies": {
-    "@babel/core": "^7.9.0",
+    "@babel/core": "^7.9.6",
     "@babel/polyfill": "^7.8.7",
-    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-env": "^7.9.6",
     "@hapi/joi": "^17.1.1",
-    "apollo-server-express": "^2.12.0",
+    "apollo-server-express": "^2.13.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
@@ -21,14 +21,14 @@
     "graphql-fields": "^2.0.3",
     "jsonwebtoken": "^8.5.1",
     "lodash.merge": "^4.6.2",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.12",
     "nodemailer": "^6.4.6",
-    "stripe": "^8.43.0"
+    "stripe": "^8.49.0"
   },
   "devDependencies": {
     "babel-watch": "^7.0.0",
     "graphql": "^15.0.0",
-    "jest": "^25.3.0",
+    "jest": "^26.0.1",
     "morgan": "^1.10.0"
   }
 }

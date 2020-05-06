@@ -1,8 +1,5 @@
-'use strict'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
-import generateToken from '#root/utils/generateToken'
 import {transport} from '#root/utils/mail'
 import {user} from '#root/models'
 
@@ -15,9 +12,9 @@ const REQUEST_RESET_MUTATION = `
   }
 `
 
-beforeAll(async () => await dbConnect())
-afterAll(async () => await dbDisconnect())
-afterEach(async () => await user.deleteMany({}))
+beforeAll(() => dbConnect())
+afterAll(() => dbDisconnect())
+afterEach(() => user.deleteMany({}))
 
 const fakeUser = {
   name: 'Test',
@@ -26,7 +23,7 @@ const fakeUser = {
 }
 
 test('returns error when user logged in', async () => {
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
   })
 
@@ -45,7 +42,7 @@ test('returns error when user logged in', async () => {
 })
 
 test('returns error when email not valid', async () => {
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
   })
 
@@ -59,7 +56,7 @@ test('returns error when email not valid', async () => {
 })
 
 test('returns success status when user not found', async () => {
-  const newUser = await user.create({
+  await user.create({
     ...fakeUser,
   })
 

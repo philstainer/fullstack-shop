@@ -1,5 +1,3 @@
-'use strict'
-
 import {makeExecutableSchema} from 'apollo-server-express'
 
 import resolvers from '#root/graphql/resolvers'

@@ -7,7 +7,7 @@ const StyledTabs = styled.div`
     grid-column-gap: 1.5rem;
     list-style: none;
     width: 100%;
-    border-bottom: 1px solid ${(props) => props.theme.border_2};
+    border-bottom: 1px solid ${props => props.theme.border_2};
     margin-bottom: 1.5rem;
   }
 
@@ -16,11 +16,11 @@ const StyledTabs = styled.div`
     cursor: pointer;
     font-weight: bold;
 
-    color: ${(props) => props.theme.text};
+    color: ${props => props.theme.text};
 
     &.active {
-      color: ${(props) => props.theme.highlight};
-      border-bottom: 1px solid ${(props) => props.theme.highlight};
+      color: ${props => props.theme.highlight};
+      border-bottom: 1px solid ${props => props.theme.highlight};
     }
   }
 

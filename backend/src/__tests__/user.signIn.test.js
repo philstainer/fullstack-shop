@@ -1,5 +1,3 @@
-'use strict'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
@@ -13,9 +11,9 @@ const SIGNIN_MUTATION = `
     } 
   }
 `
-beforeAll(async () => await dbConnect())
-afterAll(async () => await dbDisconnect())
-afterEach(async () => await user.deleteMany({}))
+beforeAll(() => dbConnect())
+afterAll(() => dbDisconnect())
+afterEach(() => user.deleteMany({}))
 
 test('returns error when user not found', async () => {
   const variables = {
@@ -29,7 +27,7 @@ test('returns error when user not found', async () => {
 })
 
 test('returns error password is invalid', async () => {
-  const newUser = await user.create({
+  await user.create({
     name: 'Test',
     email: 'test@test.com',
     password: 'secretPass123!',

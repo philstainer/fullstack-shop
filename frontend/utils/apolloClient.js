@@ -24,7 +24,7 @@ const client = ({initialState}) => {
   })
 
   return new ApolloClient({
-    link: link,
+    link,
     cache,
     typeDefs,
     resolvers,

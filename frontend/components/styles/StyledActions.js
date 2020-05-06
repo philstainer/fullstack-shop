@@ -19,7 +19,7 @@ const StyledActions = styled.ul`
   }
 
   a {
-    color: ${(props) => props.theme.grey};
+    color: ${props => props.theme.grey};
     transition: color 0.2s linear;
   }
 `

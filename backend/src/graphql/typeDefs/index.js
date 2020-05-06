@@ -1,5 +1,3 @@
-'use strict'
-
 import {gql} from 'apollo-server-express'
 import user from '#root/graphql/typeDefs/user'
 
