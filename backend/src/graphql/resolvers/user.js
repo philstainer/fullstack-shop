@@ -12,7 +12,7 @@ import generateToken from '#root/utils/generateToken'
 const resolvers = {
   Query: {
     me: async (parent, args, ctx, info) => {
-      isAuthenticated(ctx)
+      if (!ctx?.req?.userId) return null
 
       const selected = selectedFields(info)
 

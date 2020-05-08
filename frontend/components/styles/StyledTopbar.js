@@ -13,6 +13,7 @@ const StyledTopbar = styled.div`
   }
 
   li {
+    cursor: pointer;
     display: flex;
     padding: 2px 10px;
     border-bottom: 1.5px solid transparent;
@@ -26,10 +27,24 @@ const StyledTopbar = styled.div`
 
   a {
     color: ${props => props.theme.grey};
-    transition: color 0.2s linear;
+    transition: color 0.1s linear;
 
     &:hover {
       color: inherit;
+    }
+  }
+
+  li.highlighted {
+    background: ${props => props.theme.highlight};
+    transition: all 0.2s linear;
+
+    &:hover {
+      background: ${props => props.theme.highlight}99;
+      border-bottom: ${props => props.theme.highlight}99;
+    }
+
+    & a {
+      color: white;
     }
   }
 `

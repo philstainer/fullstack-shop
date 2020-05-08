@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const SIGN_IN_MUTATION = gql`
+const CONFIRM_ACCOUNT_MUTATION = gql`
   mutation($confirmToken: String!) {
     confirmAccount(confirmToken: $confirmToken) {
       status
@@ -9,4 +9,4 @@ const SIGN_IN_MUTATION = gql`
   }
 `
 
-export default SIGN_IN_MUTATION
+export default CONFIRM_ACCOUNT_MUTATION

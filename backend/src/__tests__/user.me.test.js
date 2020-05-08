@@ -17,6 +17,12 @@ beforeAll(() => dbConnect())
 afterAll(() => dbDisconnect())
 afterEach(() => user.deleteMany({}))
 
+test('returns null when not logged in', async () => {
+  const {data} = await graphqlCall(ME_QUERY, null, null)
+
+  expect(data).not.toBeNull()
+})
+
 test('returns user details when logged in', async () => {
   const newUser = await user.create({
     name: 'Test',

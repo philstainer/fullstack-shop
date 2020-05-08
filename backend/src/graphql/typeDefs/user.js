@@ -2,7 +2,7 @@ import {gql} from 'apollo-server-express'
 
 const typeDefs = gql`
   extend type Query {
-    me: User!
+    me: User
   }
 
   extend type Mutation {
