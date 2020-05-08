@@ -40,9 +40,9 @@ test('renders error on failure to confirm account', async () => {
   const failureMocks = [
     {
       request: {query: CONFIRM_ACCOUNT_MUTATION, variables: {confirmToken}},
-      result: {
+      result: jest.fn(() => ({
         errors: [new GraphQLError('Error confirming account')],
-      },
+      })),
     },
   ]
 
@@ -53,6 +53,7 @@ test('renders error on failure to confirm account', async () => {
   )
 
   await waitFor(() => {
+    expect(failureMocks[0].result).toHaveBeenCalled()
     expect(getByText(/error confirming account/i)).toBeInTheDocument()
     expect(Router.router.replace).not.toHaveBeenCalled()
   })
