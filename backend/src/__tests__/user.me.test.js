@@ -20,7 +20,7 @@ afterEach(() => user.deleteMany({}))
 test('returns null when not logged in', async () => {
   const {data} = await graphqlCall(ME_QUERY, null, null)
 
-  expect(data).not.toBeNull()
+  expect(data.me).toBeNull()
 })
 
 test('returns user details when logged in', async () => {
