@@ -11,12 +11,19 @@ import generateToken from '#root/utils/generateToken'
 
 const resolvers = {
   Query: {
-    me: (parent, args, ctx, info) => {
+    me: async (parent, args, ctx, info) => {
       isAuthenticated(ctx)
 
       const selected = selectedFields(info)
 
-      return ctx.db.user.findById(ctx.req.userId).select(selected).lean()
+      const foundUser = await ctx.db.user
+        .findById(ctx.req.userId)
+        .select(selected)
+        .lean()
+
+      if (!foundUser) ctx.res.clearCookie('token')
+
+      return foundUser
     },
   },
   Mutation: {
@@ -101,10 +108,12 @@ const resolvers = {
       if (!foundUser) throw new Error(errorMessage)
 
       await ctx.db.user
-        .findByIdAndUpdate(foundUser.id, {
+        .findByIdAndUpdate(foundUser._id, {
+          confirmed: true,
           confirmToken: null,
           confirmTokenExpiry: null,
         })
+        .select('_id')
         .lean()
 
       return {

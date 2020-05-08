@@ -65,7 +65,7 @@ test('returns error when user token has expired', async () => {
 test('returns message on success', async () => {
   const token = await generateToken()
 
-  await user.create({
+  const createdUser = await user.create({
     ...fakeUser,
     confirmToken: token,
     confirmTokenExpiry: Date.now() + 1 * 60 * 60 * 1000,
@@ -86,4 +86,10 @@ test('returns message on success', async () => {
     'message',
     expect.stringMatching(/account has now been confirmed/i),
   )
+
+  const foundUser = await user.findById(createdUser._id)
+
+  expect(foundUser).toHaveProperty('confirmToken', null)
+  expect(foundUser).toHaveProperty('confirmTokenExpiry', null)
+  expect(foundUser).toHaveProperty('confirmed', true)
 })
