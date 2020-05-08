@@ -23,6 +23,13 @@ const StyledForm = styled.form`
     color: ${props => props.theme.highlight_2};
   }
 
+  p.error {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: ${props => props.theme.red};
+    font-style: italic;
+  }
+
   fieldset {
     display: grid;
     grid-template-rows: repeat(4, min-content);
