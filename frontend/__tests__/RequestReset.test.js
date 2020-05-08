@@ -60,6 +60,6 @@ test('validates fields on submit', async () => {
   await waitFor(() => {
     expect(mocks[0].result).toHaveBeenCalled()
 
-    expect(getByText(/email has been sent/i)).toBeInTheDocument()
+    expect(getByText(/check your email for a reset link/i)).toBeInTheDocument()
   })
 })
