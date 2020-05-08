@@ -6,6 +6,7 @@ import Tabs from '#root/components/Tabs'
 
 import SignIn from '#root/components/SignIn'
 import SignUp from '#root/components/SignUp'
+import RequestReset from '#root/components/RequestReset'
 
 import {
   AUTH_MODAL_QUERY,
@@ -15,6 +16,7 @@ import {
 const tabs = [
   {text: 'Sign In', component: <SignIn />},
   {text: 'Sign Up', component: <SignUp />},
+  {text: 'Reset Password ', component: <RequestReset />},
 ]
 
 const AuthModal = () => {

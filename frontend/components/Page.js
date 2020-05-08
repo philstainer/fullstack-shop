@@ -10,6 +10,7 @@ const theme = {
   white: '#f1faee',
   red: '#e63946',
   highlight: '#228CDB',
+  highlight_2: '#2ca58d',
   text: '#2B303A',
   border: '#efefef',
   border_2: '#dcdcda',

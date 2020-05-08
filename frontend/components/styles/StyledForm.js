@@ -17,6 +17,12 @@ const StyledForm = styled.form`
     }
   }
 
+  p.success {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: ${props => props.theme.highlight_2};
+  }
+
   fieldset {
     display: grid;
     grid-template-rows: repeat(4, min-content);
