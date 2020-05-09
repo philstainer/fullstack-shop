@@ -8,6 +8,7 @@ import {
   requestReset,
   resetPassword,
   changePassword,
+  changeEmail,
 } from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
@@ -260,6 +261,34 @@ const resolvers = {
       await ctx.db.user
         .findByIdAndUpdate(foundUser._id, {
           password,
+        })
+        .select('_id')
+        .lean()
+
+      return {
+        status: 'Success',
+        message: 'Password successfully updated!',
+      }
+    },
+    changeEmail: async (parent, args, ctx, info) => {
+      isAuthenticated(ctx)
+
+      await changeEmail.validateAsync(args, {abortEarly: false})
+
+      const foundUser = await ctx.db.user
+        .findById(ctx.req.userId)
+        .select('_id password')
+        .lean()
+
+      if (!foundUser) throw new Error('Error finding details')
+
+      const isValid = await bcrypt.compare(args.password, foundUser.password)
+
+      if (!isValid) throw new Error('Invalid password')
+
+      await ctx.db.user
+        .findByIdAndUpdate(foundUser._id, {
+          email: args.email,
         })
         .select('_id')
         .lean()

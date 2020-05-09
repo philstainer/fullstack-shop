@@ -31,3 +31,13 @@ export const changePassword = Joi.object({
   password,
   confirmPassword,
 })
+
+export const confirmEmail = Joi.any()
+  .valid(Joi.ref('email'))
+  .messages({'any.only': '"email" and "confirm email" do not match'})
+export const userPassword = Joi.string().required()
+export const changeEmail = Joi.object({
+  password: userPassword,
+  email,
+  confirmEmail,
+})

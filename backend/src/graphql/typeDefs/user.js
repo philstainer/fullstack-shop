@@ -27,6 +27,11 @@ const typeDefs = gql`
       password: String!
       confirmPassword: String!
     ): Status
+    changeEmail(
+      password: String!
+      email: String!
+      confirmEmail: String!
+    ): Status
   }
 
   type User {
