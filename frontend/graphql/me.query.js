@@ -4,8 +4,10 @@ const ME_QUERY = gql`
   query me {
     me {
       _id
-      email
       name
+      email
+      confirmed
+      permissions
     }
   }
 `

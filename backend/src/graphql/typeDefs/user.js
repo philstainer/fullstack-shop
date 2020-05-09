@@ -28,6 +28,8 @@ const typeDefs = gql`
     _id: ID!
     name: String!
     email: String!
+    confirmed: Boolean!
+    permissions: [String!]
   }
 `
 
