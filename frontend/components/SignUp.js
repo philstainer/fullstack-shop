@@ -98,7 +98,7 @@ const SignUp = () => {
           {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
         </label>
 
-        {error?.message && <p>{error.message}</p>}
+        {error?.message && <p className="error">{error.message}</p>}
 
         <button data-testid="submit" type="submit">
           Sign Up!

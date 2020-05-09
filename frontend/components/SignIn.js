@@ -55,7 +55,7 @@ const SignIn = () => {
           {errors.password && <p>{errors.password.message}</p>}
         </label>
 
-        {error?.message && <p>{error.message}</p>}
+        {error?.message && <p className="error">{error.message}</p>}
 
         <button type="submit">Sign In!</button>
       </fieldset>

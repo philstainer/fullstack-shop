@@ -34,7 +34,7 @@ const RequestReset = () => {
           {errors.email && <p>{errors.email.message}</p>}
         </label>
 
-        {error?.message && <p>{error.message}</p>}
+        {error?.message && <p className="error">{error.message}</p>}
 
         {!error && !loading && called && (
           <p className="success">Success! Check your email for a reset link!</p>
