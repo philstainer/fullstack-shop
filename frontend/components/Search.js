@@ -1,5 +1,3 @@
-import React from 'react'
-
 import StyledSearch from '#root/components/styles/StyledSearch'
 
 const Search = () => {

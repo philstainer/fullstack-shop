@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 
 import StyledTabs from '#root/components/styles/StyledTabs'

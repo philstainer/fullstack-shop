@@ -1,4 +1,3 @@
-import React from 'react'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
 import Modal from '#root/components/Modal'

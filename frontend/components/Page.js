@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, {Component} from 'react'
+import {Component} from 'react'
 import styled, {ThemeProvider, createGlobalStyle} from 'styled-components'
 import Meta from '#root/components/Meta'
 import Header from '#root/components/Header'

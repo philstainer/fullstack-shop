@@ -58,7 +58,11 @@ StyledAccount.Main = styled.div`
   grid-column: 1 / span 2;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 2rem;
+  padding: 2rem 0;
+
+  & > *:not(:last-child) {
+    margin-bottom: 1rem;
+  }
 
   h1 {
     line-height: 1;

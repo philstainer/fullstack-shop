@@ -24,3 +24,10 @@ export const resetPassword = Joi.object({
   password,
   confirmPassword,
 })
+
+export const currentPassword = Joi.string().required()
+export const changePassword = Joi.object({
+  currentPassword,
+  password,
+  confirmPassword,
+})

@@ -3,7 +3,12 @@
 import bcrypt from 'bcryptjs'
 
 import isAuthenticated from '#root/utils/isAuthenticated'
-import {signUpSchema, requestReset, resetPassword} from '#root/JoiSchemas'
+import {
+  signUpSchema,
+  requestReset,
+  resetPassword,
+  changePassword,
+} from '#root/JoiSchemas'
 import selectedFields from '#root/utils/selectedFields'
 import generateUserCookie from '#root/utils/generateUserCookie'
 import {transport, basicTemplate} from '#root/utils/mail'
@@ -230,6 +235,39 @@ const resolvers = {
       generateUserCookie(updatedUser, ctx)
 
       return updatedUser
+    },
+    changePassword: async (parent, args, ctx, info) => {
+      isAuthenticated(ctx)
+
+      await changePassword.validateAsync(args, {abortEarly: false})
+
+      const foundUser = await ctx.db.user
+        .findById(ctx.req.userId)
+        .select('_id password')
+        .lean()
+
+      if (!foundUser) throw new Error('Error finding details')
+
+      const isValid = await bcrypt.compare(
+        args.currentPassword,
+        foundUser.password,
+      )
+
+      if (!isValid) throw new Error('Invalid password')
+
+      const password = await bcrypt.hash(args.password, 10)
+
+      await ctx.db.user
+        .findByIdAndUpdate(foundUser._id, {
+          password,
+        })
+        .select('_id')
+        .lean()
+
+      return {
+        status: 'Success',
+        message: 'Password successfully updated!',
+      }
     },
   },
 }

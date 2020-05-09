@@ -23,6 +23,18 @@ test('returns null when not logged in', async () => {
   expect(data.me).toBeNull()
 })
 
+test('clear cookie when user not found', async () => {
+  const context = {
+    req: {userId: '56cb91bdc3464f14678934ca'},
+    res: {clearCookie: jest.fn()},
+  }
+
+  const {data} = await graphqlCall(ME_QUERY, context, null)
+
+  expect(context.res.clearCookie).toHaveBeenCalled()
+  expect(data.me).toBeNull()
+})
+
 test('returns user details when logged in', async () => {
   const newUser = await user.create({
     name: 'Test',

@@ -1,4 +1,3 @@
-import React from 'react'
 import Link from 'next/link'
 import {useQuery, useMutation} from '@apollo/react-hooks'
 
@@ -22,7 +21,7 @@ const Actions = () => {
       )}
 
       {data?.me && (
-        <React.Fragment>
+        <>
           <li>
             <Link href="/sell">
               <a>Sell</a>
@@ -34,7 +33,7 @@ const Actions = () => {
               <a>Account</a>
             </Link>
           </li>
-        </React.Fragment>
+        </>
       )}
     </StyledActions>
   )
