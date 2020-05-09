@@ -52,13 +52,13 @@ export default withAuth(Account)
 const StyledAccount = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 1rem;
+  grid-gap: 4rem;
 `
 StyledAccount.Main = styled.div`
   grid-column: 1 / span 2;
   text-align: center;
   font-weight: bold;
-  padding: 2rem 0;
+  padding: 4rem 0;
 
   & > *:not(:last-child) {
     margin-bottom: 1rem;

@@ -21,6 +21,8 @@ const ChangePassword = () => {
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
+      <h2>Change Password</h2>
+
       <fieldset disabled={loading} aria-busy={loading}>
         <label>
           Current Password

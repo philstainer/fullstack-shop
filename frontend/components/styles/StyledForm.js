@@ -5,6 +5,11 @@ const StyledForm = styled.form`
   line-height: 1.5;
   font-weight: bold;
 
+  h2 {
+    margin-bottom: 4rem;
+    text-align: center;
+  }
+
   label {
     display: grid;
     grid-template-rows: repeat(3, min-content);
