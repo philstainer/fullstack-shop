@@ -2,8 +2,11 @@ import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
 import {GraphQLError} from 'graphql'
 
-import ChangeEmail from '#root/components/ChangeEmail'
+import ME_QUERY from '#root/graphql/me.query'
 import CHANGE_EMAIL_MUTATION from '#root/graphql/changeEmail.mutation'
+import {fakeUser} from '#root/utils/testUtils'
+
+import ChangeEmail from '#root/components/ChangeEmail'
 
 const passwords = {
   password: 'newPassword1!',
@@ -23,6 +26,11 @@ const failureMock = {
   result: jest.fn(() => ({
     errors: [new GraphQLError('Error changing email')],
   })),
+}
+
+const meQuery = {
+  request: {query: ME_QUERY},
+  result: jest.fn(() => ({data: {me: fakeUser()}})),
 }
 
 test('renders reset form', () => {
@@ -122,7 +130,7 @@ test('renders error on graphql error', async () => {
 
 test('submits and renders success message', async () => {
   const {getByTestId, getByText} = render(
-    <MockedProvider mocks={[successMock]} addTypename={false}>
+    <MockedProvider mocks={[successMock, meQuery]} addTypename={false}>
       <ChangeEmail />
     </MockedProvider>,
   )

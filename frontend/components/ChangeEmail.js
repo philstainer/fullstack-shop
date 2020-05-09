@@ -3,11 +3,15 @@ import {useMutation} from '@apollo/react-hooks'
 
 import StyledForm from '#root/components/styles/StyledForm'
 
+import ME_QUERY from '#root/graphql/me.query'
 import CHANGE_EMAIL_MUTATION from '#root/graphql/changeEmail.mutation'
 
 const ChangeEmail = () => {
   const [changeEmail, {data, loading, error}] = useMutation(
     CHANGE_EMAIL_MUTATION,
+    {
+      refetchQueries: [{query: ME_QUERY}],
+    },
   )
 
   const {register, handleSubmit, errors, watch, reset} = useForm()
