@@ -12,7 +12,6 @@ import {AUTH_MODAL_MUTATION} from '#root/graphql/localResolvers'
 const SignIn = () => {
   const [signIn, {loading, error}] = useMutation(SIGN_IN_MUTATION, {
     refetchQueries: [{query: ME_QUERY}],
-    awaitRefetchQueries: true,
   })
 
   const [toggleAuthModal] = useMutation(AUTH_MODAL_MUTATION)
