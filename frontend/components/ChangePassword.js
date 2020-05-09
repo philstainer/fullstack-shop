@@ -32,7 +32,7 @@ const ChangePassword = () => {
             name="currentPassword"
             data-testid="currentPassword"
             ref={register({
-              required: 'You must your password',
+              required: 'You must specify your password',
             })}
           />
           {errors.currentPassword && <p>{errors.currentPassword.message}</p>}

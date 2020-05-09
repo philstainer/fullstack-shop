@@ -295,7 +295,7 @@ const resolvers = {
 
       return {
         status: 'Success',
-        message: 'Password successfully updated!',
+        message: 'Email successfully updated!',
       }
     },
   },

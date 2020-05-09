@@ -2,53 +2,53 @@ import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
 import {GraphQLError} from 'graphql'
 
-import ChangePassword from '#root/components/ChangePassword'
-import CHANGE_PASSWORD_MUTATION from '#root/graphql/changePassword.mutation'
+import ChangeEmail from '#root/components/ChangeEmail'
+import CHANGE_EMAIL_MUTATION from '#root/graphql/changeEmail.mutation'
 
 const passwords = {
-  currentPassword: 'Password1@',
   password: 'newPassword1!',
-  confirmPassword: 'newPassword1!',
+  email: 'email@email.com',
+  confirmEmail: 'email@email.com',
 }
 
 const successMock = {
-  request: {query: CHANGE_PASSWORD_MUTATION, variables: passwords},
+  request: {query: CHANGE_EMAIL_MUTATION, variables: passwords},
   result: jest.fn(() => ({
-    data: {changePassword: {status: 'Success', message: 'Success Message'}},
+    data: {changeEmail: {status: 'Success', message: 'Success Message'}},
   })),
 }
 
 const failureMock = {
-  request: {query: CHANGE_PASSWORD_MUTATION, variables: passwords},
+  request: {query: CHANGE_EMAIL_MUTATION, variables: passwords},
   result: jest.fn(() => ({
-    errors: [new GraphQLError('Error changing password')],
+    errors: [new GraphQLError('Error changing email')],
   })),
 }
 
 test('renders reset form', () => {
   const {getByTestId} = render(
     <MockedProvider>
-      <ChangePassword />
+      <ChangeEmail />
     </MockedProvider>,
   )
 
-  expect(getByTestId('currentPassword')).toBeInTheDocument()
   expect(getByTestId('password')).toBeInTheDocument()
-  expect(getByTestId('confirmPassword')).toBeInTheDocument()
+  expect(getByTestId('email')).toBeInTheDocument()
+  expect(getByTestId('confirmEmail')).toBeInTheDocument()
   expect(getByTestId('submit')).toBeInTheDocument()
 })
 
 test('validates form', async () => {
   const {getByTestId, findByText} = render(
     <MockedProvider>
-      <ChangePassword />
+      <ChangeEmail />
     </MockedProvider>,
   )
 
   // Get fields
-  const currentPasswordField = getByTestId('currentPassword')
   const passwordField = getByTestId('password')
-  const confirmPasswordField = getByTestId('confirmPassword')
+  const emailField = getByTestId('email')
+  const confirmEmailField = getByTestId('confirmEmail')
   const submitButton = getByTestId('submit')
 
   // Submit form
@@ -56,12 +56,12 @@ test('validates form', async () => {
 
   // Check for required errors
   expect(await findByText('You must specify your password')).toBeInTheDocument()
-  expect(await findByText('You must specify a password')).toBeInTheDocument()
-  expect(await findByText('You must confirm your password')).toBeInTheDocument()
+  expect(await findByText('You must specify a valid email')).toBeInTheDocument()
+  expect(await findByText('You must confirm your email')).toBeInTheDocument()
 
   // Update the current password, submit and check that error is gone for field
-  fireEvent.change(currentPasswordField, {
-    target: {value: passwords.currentPassword},
+  fireEvent.change(passwordField, {
+    target: {value: passwords.password},
   })
   fireEvent.click(submitButton)
   expect(
@@ -69,53 +69,53 @@ test('validates form', async () => {
   ).not.toBeInTheDocument()
 
   // Update the password, submit and check that error is gone for field
-  fireEvent.change(passwordField, {target: {value: passwords.password}})
+  fireEvent.change(emailField, {target: {value: passwords.email}})
   fireEvent.click(submitButton)
   expect(
-    await findByText('You must specify a password'),
+    await findByText('You must specify a valid email'),
   ).not.toBeInTheDocument()
 
   // Update the confirm password with wrong password, submit and check for
   // passwords do not match error
-  fireEvent.change(confirmPasswordField, {target: {value: 'I do not match'}})
+  fireEvent.change(confirmEmailField, {target: {value: 'I do not match'}})
   fireEvent.click(submitButton)
-  expect(await findByText('The passwords do not match')).toBeInTheDocument()
+  expect(await findByText('Emails do not match')).toBeInTheDocument()
 
   // Update the confirm password, submit and check that error has disappeared
-  fireEvent.change(confirmPasswordField, {
-    target: {value: passwords.confirmPassword},
+  fireEvent.change(confirmEmailField, {
+    target: {value: passwords.confirmEmail},
   })
   fireEvent.click(submitButton)
-  expect(await findByText('The passwords do not match')).not.toBeInTheDocument()
+  expect(await findByText('Emails do not match')).not.toBeInTheDocument()
 })
 
 test('renders error on graphql error', async () => {
   const {getByTestId, getByText} = render(
     <MockedProvider mocks={[failureMock]} addTypename={false}>
-      <ChangePassword />
+      <ChangeEmail />
     </MockedProvider>,
   )
 
   // Get fields
-  const currentPasswordField = getByTestId('currentPassword')
   const passwordField = getByTestId('password')
-  const confirmPasswordField = getByTestId('confirmPassword')
+  const emailField = getByTestId('email')
+  const confirmEmailField = getByTestId('confirmEmail')
   const submitButton = getByTestId('submit')
 
   // Set values
-  fireEvent.change(currentPasswordField, {
-    target: {value: passwords.currentPassword},
+  fireEvent.change(passwordField, {
+    target: {value: passwords.password},
   })
-  fireEvent.change(passwordField, {target: {value: passwords.password}})
-  fireEvent.change(confirmPasswordField, {
-    target: {value: passwords.confirmPassword},
+  fireEvent.change(emailField, {target: {value: passwords.email}})
+  fireEvent.change(confirmEmailField, {
+    target: {value: passwords.confirmEmail},
   })
 
   // Submit form
   fireEvent.click(submitButton)
 
   await waitFor(() => {
-    expect(getByText(/error changing password/i)).toBeInTheDocument()
+    expect(getByText(/error changing email/i)).toBeInTheDocument()
     expect(failureMock.result).toHaveBeenCalled()
   })
 })
@@ -123,23 +123,23 @@ test('renders error on graphql error', async () => {
 test('submits and renders success message', async () => {
   const {getByTestId, getByText} = render(
     <MockedProvider mocks={[successMock]} addTypename={false}>
-      <ChangePassword />
+      <ChangeEmail />
     </MockedProvider>,
   )
 
   // Get fields
-  const currentPasswordField = getByTestId('currentPassword')
   const passwordField = getByTestId('password')
-  const confirmPasswordField = getByTestId('confirmPassword')
+  const emailField = getByTestId('email')
+  const confirmEmailField = getByTestId('confirmEmail')
   const submitButton = getByTestId('submit')
 
   // Set values
-  fireEvent.change(currentPasswordField, {
-    target: {value: passwords.currentPassword},
+  fireEvent.change(passwordField, {
+    target: {value: passwords.password},
   })
-  fireEvent.change(passwordField, {target: {value: passwords.password}})
-  fireEvent.change(confirmPasswordField, {
-    target: {value: passwords.confirmPassword},
+  fireEvent.change(emailField, {target: {value: passwords.email}})
+  fireEvent.change(confirmEmailField, {
+    target: {value: passwords.confirmEmail},
   })
 
   // Submit form
