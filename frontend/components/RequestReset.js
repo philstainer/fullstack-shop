@@ -15,7 +15,9 @@ const RequestReset = () => {
   const {register, handleSubmit, errors, watch} = useForm()
 
   const onSubmit = async variables => {
-    await requestReset({variables})
+    try {
+      await requestReset({variables})
+    } catch (error) {}
   }
 
   return (

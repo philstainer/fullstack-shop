@@ -1,5 +1,6 @@
 import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
+import {GraphQLError} from 'graphql'
 
 import SignIn from '#root/components/SignIn'
 import SIGN_IN_MUTATION from '#root/graphql/signIn.mutation'
@@ -19,6 +20,16 @@ const mocks = [
   },
   {request: {query: ME_QUERY}, result: jest.fn(() => ({data: {me: user}}))},
 ]
+
+const signInErrorMock = {
+  request: {
+    query: SIGN_IN_MUTATION,
+    variables: {email: user.email, password},
+  },
+  result: jest.fn(() => ({
+    errors: [new GraphQLError('Error signing in...')],
+  })),
+}
 
 const localResolvers = {Mutation: {toggleAuthModal: jest.fn()}}
 
@@ -54,6 +65,27 @@ test('validates fields on submit', async () => {
 
   expect(emailValidation).toBeInTheDocument()
   expect(passwordValidation).toBeInTheDocument()
+})
+
+test('renders error on graphql error', async () => {
+  const {getByText, getByTestId} = render(
+    <MockedProvider mocks={[signInErrorMock]} addTypename={false}>
+      <SignIn />
+    </MockedProvider>,
+  )
+  const emailField = getByTestId('email')
+  const passwordField = getByTestId('password')
+  const submitButton = getByText(/sign in/i)
+
+  fireEvent.change(emailField, {target: {value: user.email}})
+  fireEvent.change(passwordField, {target: {value: password}})
+
+  fireEvent.click(submitButton)
+
+  await waitFor(() => {
+    expect(getByText(/error signing in/i)).toBeInTheDocument()
+    expect(signInErrorMock.result).toHaveBeenCalled()
+  })
 })
 
 test('refetchs me query on success and closes modal', async () => {

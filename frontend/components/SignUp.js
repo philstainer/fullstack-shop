@@ -19,9 +19,11 @@ const SignUp = () => {
   const {register, handleSubmit, errors, watch} = useForm()
 
   const onSubmit = async variables => {
-    await signUp({variables})
+    try {
+      await signUp({variables})
 
-    toggleAuthModal()
+      toggleAuthModal()
+    } catch (err) {}
   }
 
   return (

@@ -1,5 +1,6 @@
 import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
+import {GraphQLError} from 'graphql'
 
 import SignUp from '#root/components/SignUp'
 import SIGN_UP_MUTATION from '#root/graphql/signUp.mutation'
@@ -24,6 +25,21 @@ const mocks = [
   },
   {request: {query: ME_QUERY}, result: jest.fn(() => ({data: {me: user}}))},
 ]
+
+const signUpErrorMock = {
+  request: {
+    query: SIGN_UP_MUTATION,
+    variables: {
+      name: user.name,
+      email: user.email,
+      password,
+      confirmPassword: password,
+    },
+  },
+  result: jest.fn(() => ({
+    errors: [new GraphQLError('Error signing up...')],
+  })),
+}
 
 const localResolvers = {Mutation: {toggleAuthModal: jest.fn()}}
 
@@ -131,6 +147,31 @@ test("renders confirm password validation message when passwords don't match", a
 
   const confirmPasswordInvalid = await findByText(/passwords do not match/i)
   expect(confirmPasswordInvalid).toBeInTheDocument()
+})
+
+test('renders error on graphql error', async () => {
+  const {getByTestId, getByText} = render(
+    <MockedProvider mocks={[signUpErrorMock]} addTypename={false}>
+      <SignUp />
+    </MockedProvider>,
+  )
+
+  const nameField = getByTestId('name')
+  const emailField = getByTestId('email')
+  const passwordField = getByTestId('password')
+  const confirmPasswordField = getByTestId('confirmPassword')
+  const submitButton = getByTestId('submit')
+
+  fireEvent.change(nameField, {target: {value: user.name}})
+  fireEvent.change(emailField, {target: {value: user.email}})
+  fireEvent.change(passwordField, {target: {value: password}})
+  fireEvent.change(confirmPasswordField, {target: {value: password}})
+  fireEvent.click(submitButton)
+
+  await waitFor(() => {
+    expect(getByText(/error signing up/i)).toBeInTheDocument()
+    expect(signUpErrorMock.result).toHaveBeenCalled()
+  })
 })
 
 test('successfully signs up on valid form', async () => {

@@ -27,11 +27,11 @@ export const resolvers = {
     toggleAuthModal: (root, variables, {cache}) => {
       const currentState = cache.readQuery({query: AUTH_MODAL_QUERY})
 
-      const nextState = currentState.authModal === null ? 0 : null
+      cache.writeData({
+        data: {authModal: currentState.authModal === null ? 0 : null},
+      })
 
-      cache.writeData({data: {authModal: nextState}})
-
-      return nextState
+      return null
     },
   },
 }
