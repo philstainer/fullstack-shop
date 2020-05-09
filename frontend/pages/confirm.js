@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {useMutation} from '@apollo/react-hooks'
 import Router from 'next/router'
 
+import ME_QUERY from '#root/graphql/me.query'
 import CONFIRM_ACCOUNT_MUTATION from '#root/graphql/confirmAccount.mutation'
 
 const styles = {
@@ -16,6 +17,7 @@ const styles = {
 const Confirm = ({query: {confirmToken}}) => {
   const [confirmAccount, {error}] = useMutation(CONFIRM_ACCOUNT_MUTATION, {
     variables: {confirmToken},
+    refetchQueries: [{query: ME_QUERY}],
   })
 
   const handleConfirm = async () => {
