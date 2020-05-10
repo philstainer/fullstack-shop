@@ -1,5 +1,7 @@
 import {gql} from 'apollo-server-express'
+
 import user from '#root/graphql/typeDefs/user'
+import item from '#root/graphql/typeDefs/item'
 
 const root = gql`
   type Query {
@@ -16,6 +18,6 @@ const root = gql`
   }
 `
 
-const typeDefs = [root, user]
+const typeDefs = [root, user, item]
 
 export default typeDefs

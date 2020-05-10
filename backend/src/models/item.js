@@ -1,12 +1,13 @@
-import {Schema, model, Decimal128} from 'mongoose'
+import {Schema, model, ObjectId} from 'mongoose'
 
 const ItemSchema = new Schema(
   {
     title: {type: String, required: true, trim: true},
     description: {type: String, required: true, trim: true},
-    image: {type: String, trim: true},
-    largeImage: {type: String, trim: true},
-    price: {type: Decimal128, required: true},
+    imageUrl: {type: String, required: true, trim: true},
+    price: {type: Number, required: true},
+    createdBy: {type: ObjectId, ref: 'user'},
+    updatedBy: {type: ObjectId, ref: 'user'},
   },
   {timestamps: true},
 )

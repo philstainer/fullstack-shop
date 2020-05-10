@@ -41,3 +41,14 @@ export const changeEmail = Joi.object({
   email,
   confirmEmail,
 })
+
+export const title = Joi.string().required()
+export const description = Joi.string().required()
+export const imageUrl = Joi.string().uri().required()
+export const price = Joi.number().required()
+export const createItem = Joi.object({
+  title,
+  description,
+  imageUrl,
+  price,
+})
