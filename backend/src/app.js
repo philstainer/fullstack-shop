@@ -3,6 +3,7 @@ import express from 'express'
 import cors from 'cors'
 
 import verifyToken from '#root/utils/verifyToken'
+import populateUser from '#root/utils/populateUser'
 import apolloServer from '#root/graphql/apolloServer'
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -21,6 +22,8 @@ if (!isProduction) {
 app.use(cookieParser())
 
 app.use(verifyToken)
+
+app.use(populateUser)
 
 app.use(cors({credentials: true, origin: process.env.FRONTEND_URL}))
 
