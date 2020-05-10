@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import mongoose from 'mongoose'
 
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
@@ -90,6 +91,8 @@ test('returns error when password and confirmPassword do not match', async () =>
 })
 
 test('returns error when user not found', async () => {
+  const userId = new mongoose.Types.ObjectId()
+
   const variables = {
     currentPassword: fakeUser.password,
     password: newPassword,
@@ -98,7 +101,7 @@ test('returns error when user not found', async () => {
 
   const context = {
     req: {
-      userId: '56cb91bdc3464f14678934ca',
+      userId,
     },
   }
 

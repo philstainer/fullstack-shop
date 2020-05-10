@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
@@ -24,8 +26,10 @@ test('returns null when not logged in', async () => {
 })
 
 test('clear cookie when user not found', async () => {
+  const userId = new mongoose.Types.ObjectId()
+
   const context = {
-    req: {userId: '56cb91bdc3464f14678934ca'},
+    req: {userId},
     res: {clearCookie: jest.fn()},
   }
 
