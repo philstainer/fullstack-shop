@@ -1,3 +1,5 @@
+import mongoose from 'mongoose'
+
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 import {transport} from '#root/utils/mail'
@@ -22,19 +24,27 @@ const fakeUser = {
   password: 'secretPass123!',
 }
 
-test('returns error when user not found', async () => {
+test('returns error when user not authenticated', async () => {
   await user.create({
     ...fakeUser,
   })
 
+  const {errors} = await graphqlCall(REQUEST_CONFIRM_MUTATION, null, null)
+
+  expect(errors[0].message).toMatch(/you must be logged in to do that/i)
+})
+
+test('returns error when user not found', async () => {
+  const userId = new mongoose.Types.ObjectId()
+
   const context = {
-    req: {userId: 'user not found'},
+    req: {userId},
     res: {},
   }
 
   const {errors} = await graphqlCall(REQUEST_CONFIRM_MUTATION, context, null)
 
-  expect(errors).toHaveLength(1)
+  expect(errors[0].message).toMatch(/problem with requesting confirm token/i)
 })
 
 test('returns error when user already confirmed', async () => {
