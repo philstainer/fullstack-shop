@@ -27,8 +27,6 @@ const resolvers = {
         .select(selected)
         .lean()
 
-      if (!foundUser) ctx.res.clearCookie('token')
-
       return foundUser
     },
   },

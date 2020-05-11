@@ -32,6 +32,7 @@ const UserSchema = new Schema(
         'ITEMDELETE',
         'PERMISSIONUPDATE',
       ],
+      default: 'USER',
     },
   },
   {timestamps: true},

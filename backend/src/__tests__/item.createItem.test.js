@@ -118,11 +118,7 @@ test('returns createdItem on success', async () => {
     },
   }
 
-  const {data, errors} = await graphqlCall(
-    CREATE_ITEM_MUTATION,
-    context,
-    variables,
-  )
+  const {data} = await graphqlCall(CREATE_ITEM_MUTATION, context, variables)
 
   expect(data.createItem).toHaveProperty('_id')
   expect(data.createItem).toHaveProperty('title', variables.title)

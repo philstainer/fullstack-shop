@@ -9,7 +9,11 @@ const populateUser = async (req, res, next) => {
       .select('_id name email permissions')
       .lean()
 
-    if (!foundUser) throw new Error('Unable to populate user')
+    if (!foundUser) {
+      res.clearCookie('token')
+
+      return next()
+    }
 
     req.user = foundUser
   }

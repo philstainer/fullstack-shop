@@ -22,13 +22,16 @@ test('returns next() when no userId', () => {
 test('throws error when failed to find user', async () => {
   const userId = new mongoose.Types.ObjectId()
   const req = {userId}
+  const res = {clearCookie: jest.fn()}
+  const next = jest.fn()
 
-  await expect(populateUser(req, null, null)).rejects.toThrowError(
-    'Unable to populate user',
-  )
+  await populateUser(req, res, next)
+
+  expect(next).toHaveBeenCalled()
+  expect(res.clearCookie).toHaveBeenCalled()
 })
 
-test('throws error when failed to find user', async () => {
+test('populates req.user with user', async () => {
   const fakeUser = {
     name: 'Test',
     email: 'test@test.com',
@@ -43,7 +46,7 @@ test('throws error when failed to find user', async () => {
     _id: createdUser._id,
     name: fakeUser.name,
     email: fakeUser.email,
-    permissions: [],
+    permissions: ['USER'],
   }
 
   await populateUser(req, null, next)

@@ -1,5 +1,3 @@
-import mongoose from 'mongoose'
-
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
@@ -22,20 +20,6 @@ afterEach(() => user.deleteMany({}))
 test('returns null when not logged in', async () => {
   const {data} = await graphqlCall(ME_QUERY, null, null)
 
-  expect(data.me).toBeNull()
-})
-
-test('clear cookie when user not found', async () => {
-  const userId = new mongoose.Types.ObjectId()
-
-  const context = {
-    req: {userId},
-    res: {clearCookie: jest.fn()},
-  }
-
-  const {data} = await graphqlCall(ME_QUERY, context, null)
-
-  expect(context.res.clearCookie).toHaveBeenCalled()
   expect(data.me).toBeNull()
 })
 
