@@ -20,6 +20,8 @@ const typeDefs = gql`
     description: String!
     imageUrl: String!
     price: Int!
+    createdBy: User
+    updatedBy: User
   }
 `
 

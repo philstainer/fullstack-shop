@@ -53,6 +53,7 @@ const StyledAccount = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 4rem;
+  margin-bottom: 5rem;
 `
 StyledAccount.Main = styled.div`
   grid-column: 1 / span 2;

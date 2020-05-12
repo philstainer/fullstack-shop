@@ -1,7 +1,7 @@
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
-import {user} from '#root/models'
+import {user, item} from '#root/models'
 
 const CREATE_ITEM_MUTATION = `
   mutation(
@@ -21,13 +21,16 @@ const CREATE_ITEM_MUTATION = `
       description
       imageUrl
       price
+      createdBy {
+        _id
+      }
     }
   }
 `
 
 beforeAll(() => dbConnect())
 afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+afterEach(() => Promise.all([user.deleteMany({}), item.deleteMany({})]))
 
 const fakeUser = {
   name: 'Test',
@@ -125,4 +128,5 @@ test('returns createdItem on success', async () => {
   expect(data.createItem).toHaveProperty('description', variables.description)
   expect(data.createItem).toHaveProperty('imageUrl', variables.imageUrl)
   expect(data.createItem).toHaveProperty('price', variables.price)
+  expect(data.createItem).toHaveProperty('createdBy')
 })

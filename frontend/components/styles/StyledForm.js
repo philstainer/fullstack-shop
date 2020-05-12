@@ -60,6 +60,7 @@ const StyledForm = styled.form`
     font-size: 1.2rem;
     border: 1px solid ${props => props.theme.border_2};
     border-radius: 2px;
+    resize: vertical;
 
     &:focus {
       outline: 0;

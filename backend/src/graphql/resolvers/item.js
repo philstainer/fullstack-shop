@@ -14,9 +14,13 @@ const resolvers = {
       // Validate input
       await createItem.validateAsync(args, {abortEarly: false})
 
-      const createdItem = await ctx.db.item.create(args)
+      const createdItem = await ctx.db.item.create({
+        ...args,
+        createdBy: ctx.req.user._id,
+      })
 
-      return createdItem
+      // return createdItem
+      return {...createdItem._doc, createdBy: ctx.req.user}
     },
   },
 }

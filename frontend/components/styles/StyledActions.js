@@ -6,21 +6,15 @@ const StyledActions = styled.ul`
   font-size: 1rem;
   text-transform: uppercase;
 
-  li {
-    /* display: flex; */
-    padding: 1rem;
-    cursor: pointer;
-
-    &:hover {
-      a {
-        color: inherit;
-      }
-    }
-  }
-
   a {
+    padding: 2rem 1rem;
+    cursor: pointer;
     color: ${props => props.theme.grey};
     transition: color 0.2s linear;
+
+    &:hover {
+      color: inherit;
+    }
   }
 `
 
