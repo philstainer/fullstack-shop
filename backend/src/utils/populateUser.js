@@ -6,7 +6,7 @@ const populateUser = async (req, res, next) => {
   if (req?.userId) {
     const foundUser = await user
       .findById(req.userId)
-      .select('_id name email permissions')
+      .select('_id name email confirmed permissions')
       .lean()
 
     if (!foundUser) {

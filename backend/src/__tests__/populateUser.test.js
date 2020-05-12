@@ -46,6 +46,7 @@ test('populates req.user with user', async () => {
     _id: createdUser._id,
     name: fakeUser.name,
     email: fakeUser.email,
+    confirmed: false,
     permissions: ['USER'],
   }
 
