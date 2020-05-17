@@ -2,6 +2,7 @@ import {gql} from 'apollo-server-express'
 
 const typeDefs = gql`
   extend type Query {
+    items(limit: Int, skip: Int): [Item!]
     item(_id: ID!): Item
   }
 
