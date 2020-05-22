@@ -16,6 +16,7 @@ const theme = {
   border_2: '#dcdcda',
   grey: '#787878',
   maxWidth: '1000px',
+  bs: '0 5px 25px 0 rgba(0,0,0,0.08)',
 }
 
 const StyledPage = styled.div`

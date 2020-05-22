@@ -5,3 +5,11 @@ export const fakeUser = () => ({
   confirmed: true,
   permissions: ['USER'],
 })
+
+export const fakeItem = () => ({
+  _id: '12345',
+  title: 'Title',
+  description: 'Description',
+  imageUrl: 'https://localhost:3000',
+  price: 9999,
+})

@@ -6,7 +6,7 @@ import {createItem} from '#root/JoiSchemas'
 const resolvers = {
   Query: {
     items: async (parent, {limit, skip}, ctx, info) => {
-      const selected = selectedFields(info)
+      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
 
       const items = await ctx.db.item
         .find()
