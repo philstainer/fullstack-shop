@@ -17,6 +17,13 @@ const resolvers = {
 
       return items
     },
+    itemsConnection: async (parent, args, ctx, info) => {
+      const totalCount = ctx.db.item.estimatedDocumentCount()
+
+      return {
+        totalCount,
+      }
+    },
   },
   Mutation: {
     createItem: async (parent, args, ctx, info) => {
