@@ -14,6 +14,7 @@ const typeDefs = gql`
       imageUrl: String!
       price: Int!
     ): Item
+    deleteItem(id: ID!): Item!
   }
 
   type Item {
