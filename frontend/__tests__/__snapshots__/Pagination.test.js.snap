@@ -2,7 +2,7 @@
 
 exports[`prev and next buttons disabled on 1 page 1`] = `
 <ul
-  class="StyledPagination-wh88lk-0 ccfjeE"
+  class="StyledPagination-wh88lk-0 dIxDrA"
   data-testid="pagination"
 >
   <a
@@ -40,7 +40,7 @@ exports[`prev and next buttons disabled on 1 page 1`] = `
 
 exports[`prev and next buttons enabled with items 1`] = `
 <ul
-  class="StyledPagination-wh88lk-0 ccfjeE"
+  class="StyledPagination-wh88lk-0 dIxDrA"
   data-testid="pagination"
 >
   <a

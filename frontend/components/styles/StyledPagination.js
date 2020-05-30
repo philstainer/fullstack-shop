@@ -19,9 +19,17 @@ const StyledPagination = styled.ul`
     }
   }
 
+  a {
+    transition: 0.2s all;
+  }
+
   a[aria-disabled='true'] {
     color: grey;
     pointer-events: none;
+  }
+
+  a[aria-disabled='false']:hover {
+    background: ${props => props.theme.border};
   }
 `
 
