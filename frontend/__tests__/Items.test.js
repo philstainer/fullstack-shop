@@ -5,6 +5,7 @@ import {GraphQLError} from 'graphql'
 import Items from '#root/pages/index'
 import ITEMS_QUERY from '#root/graphql/items.query'
 import ME_QUERY from '#root/graphql/me.query'
+import ITEMS_CONNECTION_QUERY from '#root/graphql/itemsConnection.query'
 import {fakeUser, fakeItem} from '#root/utils/testUtils'
 
 const perPage = 4
@@ -25,7 +26,7 @@ test('renders error on graphql error', async () => {
   const mock = {
     request: {
       query: ITEMS_QUERY,
-      variables: {skip: 1 * perPage - perPage},
+      variables: {skip: 1 * perPage - perPage, limit: perPage},
     },
     result: jest.fn(() => ({
       errors: [new GraphQLError('Error finding items...')],
@@ -39,7 +40,6 @@ test('renders error on graphql error', async () => {
   )
 
   await waitFor(() => {
-    expect(getByText(/error/i)).toBeInTheDocument()
     expect(getByText(/error finding items/i)).toBeInTheDocument()
   })
 })
@@ -48,7 +48,7 @@ test('renders items', async () => {
   const items = {
     request: {
       query: ITEMS_QUERY,
-      variables: {skip: 1 * perPage - perPage},
+      variables: {skip: 1 * perPage - perPage, limit: perPage},
     },
     result: jest.fn(() => ({
       data: {items: [fakeItem()]},
@@ -60,8 +60,17 @@ test('renders items', async () => {
     result: jest.fn(() => ({data: {me: fakeUser()}})),
   }
 
+  const itemsConnection = {
+    request: {
+      query: ITEMS_CONNECTION_QUERY,
+    },
+    result: jest.fn(() => ({
+      data: {itemsConnection: {totalCount: 1}},
+    })),
+  }
+
   const {queryByText, getByText} = render(
-    <MockedProvider mocks={[items, me]} addTypename={false}>
+    <MockedProvider mocks={[items, me, itemsConnection]} addTypename={false}>
       <Items />
     </MockedProvider>,
   )
@@ -77,7 +86,7 @@ test('renders only add to cart for user permission', async () => {
   const items = {
     request: {
       query: ITEMS_QUERY,
-      variables: {skip: 1 * perPage - perPage},
+      variables: {skip: 1 * perPage - perPage, limit: perPage},
     },
     result: jest.fn(() => ({
       data: {items: [fakeItem()]},
@@ -89,8 +98,17 @@ test('renders only add to cart for user permission', async () => {
     result: jest.fn(() => ({data: {me: fakeUser()}})),
   }
 
+  const itemsConnection = {
+    request: {
+      query: ITEMS_CONNECTION_QUERY,
+    },
+    result: jest.fn(() => ({
+      data: {itemsConnection: {totalCount: 1}},
+    })),
+  }
+
   const {queryByText, getByText} = render(
-    <MockedProvider mocks={[items, me]} addTypename={false}>
+    <MockedProvider mocks={[items, me, itemsConnection]} addTypename={false}>
       <Items />
     </MockedProvider>,
   )
@@ -106,7 +124,7 @@ test('renders edit button for admin and item update permissions', async () => {
   const items = {
     request: {
       query: ITEMS_QUERY,
-      variables: {skip: 1 * perPage - perPage},
+      variables: {skip: 1 * perPage - perPage, limit: perPage},
     },
     result: jest.fn(() => ({
       data: {items: [fakeItem()]},
@@ -125,8 +143,17 @@ test('renders edit button for admin and item update permissions', async () => {
     })),
   }
 
+  const itemsConnection = {
+    request: {
+      query: ITEMS_CONNECTION_QUERY,
+    },
+    result: jest.fn(() => ({
+      data: {itemsConnection: {totalCount: 1}},
+    })),
+  }
+
   const {getByText} = render(
-    <MockedProvider mocks={[items, me]} addTypename={false}>
+    <MockedProvider mocks={[items, me, itemsConnection]} addTypename={false}>
       <Items />
     </MockedProvider>,
   )
@@ -140,7 +167,7 @@ test('renders delete button for admin and item delete permissions', async () => 
   const items = {
     request: {
       query: ITEMS_QUERY,
-      variables: {skip: 1 * perPage - perPage},
+      variables: {skip: 1 * perPage - perPage, limit: perPage},
     },
     result: jest.fn(() => ({
       data: {items: [fakeItem()]},
@@ -159,8 +186,17 @@ test('renders delete button for admin and item delete permissions', async () => 
     })),
   }
 
+  const itemsConnection = {
+    request: {
+      query: ITEMS_CONNECTION_QUERY,
+    },
+    result: jest.fn(() => ({
+      data: {itemsConnection: {totalCount: 1}},
+    })),
+  }
+
   const {getByText} = render(
-    <MockedProvider mocks={[items, me]} addTypename={false}>
+    <MockedProvider mocks={[items, me, itemsConnection]} addTypename={false}>
       <Items />
     </MockedProvider>,
   )

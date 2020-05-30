@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`prev and next buttons disabled on 1 page 1`] = `
+<ul
+  class="StyledPagination-wh88lk-0 ccfjeE"
+  data-testid="pagination"
+>
+  <a
+    aria-disabled="true"
+    class="prev"
+    href="/?page=0"
+  >
+    ← Prev
+  </a>
+  <p>
+    Page 
+    1
+     of 
+    <span
+      class="totalPages"
+    >
+      1
+    </span>
+    !
+  </p>
+  <p>
+    1
+     Item
+     Total
+  </p>
+  <a
+    aria-disabled="true"
+    class="next"
+    href="/?page=2"
+  >
+    Next →
+  </a>
+</ul>
+`;
+
+exports[`prev and next buttons enabled with items 1`] = `
+<ul
+  class="StyledPagination-wh88lk-0 ccfjeE"
+  data-testid="pagination"
+>
+  <a
+    aria-disabled="false"
+    class="prev"
+    href="/?page=1"
+  >
+    ← Prev
+  </a>
+  <p>
+    Page 
+    2
+     of 
+    <span
+      class="totalPages"
+    >
+      5
+    </span>
+    !
+  </p>
+  <p>
+    20
+     Item
+    s
+     Total
+  </p>
+  <a
+    aria-disabled="false"
+    class="next"
+    href="/?page=3"
+  >
+    Next →
+  </a>
+</ul>
+`;
