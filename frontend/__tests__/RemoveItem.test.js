@@ -1,6 +1,5 @@
 import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
-import {GraphQLError} from 'graphql'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 
 import RemoveItem from '#root/components/RemoveItem'
