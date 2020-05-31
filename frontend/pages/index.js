@@ -10,9 +10,10 @@ const perPage = 4
 
 const Items = ({query}) => {
   const page = parseFloat(query?.page) || 1
+  const skip = page * perPage - perPage
 
   const {data, loading, error} = useQuery(ITEMS_QUERY, {
-    variables: {skip: page * perPage - perPage, limit: perPage},
+    variables: {skip, limit: perPage},
   })
 
   if (loading) return <p>Loading...</p>
@@ -30,7 +31,7 @@ const Items = ({query}) => {
 
       <StyledItems>
         {data.items.map(item => (
-          <Item item={item} key={item._id} />
+          <Item item={item} key={item._id} skip={skip} />
         ))}
       </StyledItems>
 

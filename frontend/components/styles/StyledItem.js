@@ -52,6 +52,11 @@ const StyledItem = styled.div`
       font-size: 1rem;
       padding: 1rem;
       cursor: pointer;
+      transition: 0.2s opacity;
+
+      &:hover {
+        opacity: 0.9;
+      }
     }
 
     .add {
