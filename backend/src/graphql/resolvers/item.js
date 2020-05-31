@@ -17,6 +17,11 @@ const resolvers = {
 
       return items
     },
+    item: async (parent, args, ctx, info) => {
+      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
+
+      return ctx.db.item.findById(args.id).select(selected).lean()
+    },
     itemsConnection: async (parent, args, ctx, info) => {
       const totalCount = ctx.db.item.estimatedDocumentCount()
 

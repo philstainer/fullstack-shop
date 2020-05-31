@@ -4,7 +4,7 @@ const typeDefs = gql`
   extend type Query {
     items(limit: Int, skip: Int): [Item!]
     itemsConnection: ItemsConnection
-    item(_id: ID!): Item
+    item(id: ID!): Item
   }
 
   extend type Mutation {
