@@ -15,6 +15,13 @@ const typeDefs = gql`
       price: Int!
     ): Item
     deleteItem(id: ID!): Item!
+    updateItem(
+      id: ID!
+      title: String
+      description: String
+      imageUrl: String
+      price: Int
+    ): Item
   }
 
   type Item {
