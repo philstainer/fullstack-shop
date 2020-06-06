@@ -6,7 +6,7 @@ import {createItem} from '#root/JoiSchemas'
 const resolvers = {
   Query: {
     items: async (parent, {limit, skip}, ctx, info) => {
-      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
+      const selected = selectedFields(info)
 
       const items = await ctx.db.item
         .find()
@@ -18,7 +18,7 @@ const resolvers = {
       return items
     },
     item: async (parent, args, ctx, info) => {
-      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
+      const selected = selectedFields(info)
 
       return ctx.db.item.findById(args.id).select(selected).lean()
     },
@@ -45,7 +45,7 @@ const resolvers = {
       })
 
       // return createdItem
-      return {...createdItem._doc, createdBy: ctx.req.user}
+      return createdItem
     },
     deleteItem: async (parent, args, ctx, info) => {
       isAuthenticated(ctx)
@@ -68,7 +68,7 @@ const resolvers = {
         throw new Error("You don't have permission to do that!")
       }
 
-      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
+      const selected = selectedFields(info)
 
       return ctx.db.item.findByIdAndRemove(args.id).select(selected).lean()
     },
@@ -94,7 +94,7 @@ const resolvers = {
         throw new Error("You don't have permission to do that!")
       }
 
-      const selected = selectedFields(info, ['createdBy', 'updatedBy'])
+      const selected = selectedFields(info)
 
       return ctx.db.item
         .findByIdAndUpdate(

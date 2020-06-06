@@ -9,9 +9,6 @@ const ITEMS_QUERY = `
       _id
       title
       description
-      createdBy {
-        _id
-      }
     }
   }
 `
@@ -19,89 +16,72 @@ const ITEMS_QUERY = `
 beforeAll(async () => {
   await dbConnect()
 
-  const createdUser = await user.create({
-    name: 'Test User',
-    email: 'test@test.com',
-    password: '12345',
-  })
-
   const items = [
     {
       title: 'Item 1',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 2',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 3',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 4',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 5',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 6',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 7',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 8',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 9',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 10',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
     {
       title: 'Item 11',
       description: 'description',
       imageUrl: 'imageUrl',
       price: 0,
-      createdBy: createdUser._id,
     },
   ]
 

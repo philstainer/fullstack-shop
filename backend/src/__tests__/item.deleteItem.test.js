@@ -13,9 +13,6 @@ const DELETE_ITEM_MUTATION = `
       description
       imageUrl
       price
-      createdBy {
-        _id
-      }
     }
   }
 `

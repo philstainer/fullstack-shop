@@ -21,9 +21,6 @@ const CREATE_ITEM_MUTATION = `
       description
       imageUrl
       price
-      createdBy {
-        _id
-      }
     }
   }
 `
@@ -128,5 +125,4 @@ test('returns createdItem on success', async () => {
   expect(data.createItem).toHaveProperty('description', variables.description)
   expect(data.createItem).toHaveProperty('imageUrl', variables.imageUrl)
   expect(data.createItem).toHaveProperty('price', variables.price)
-  expect(data.createItem).toHaveProperty('createdBy')
 })
