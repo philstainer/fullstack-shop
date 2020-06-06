@@ -8,7 +8,6 @@ const StyledItem = styled.div`
   border: 1px solid ${props => props.theme.border};
   box-shadow: ${props => props.theme.bs};
   position: relative;
-  cursor: pointer;
 
   img {
     height: auto;

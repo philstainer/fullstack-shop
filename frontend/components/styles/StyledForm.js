@@ -68,6 +68,10 @@ const StyledForm = styled.form`
     }
   }
 
+  button[disabled] {
+    opacity: 0.5;
+  }
+
   button,
   input[type='submit'] {
     width: 100%;
