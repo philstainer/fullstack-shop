@@ -55,7 +55,7 @@ test('increment the quantity when already in cart', async () => {
     price: 19,
   })
 
-  await cartItem.create({
+  const newCartItem = await cartItem.create({
     quantity: 1,
     user: newUser._id,
     item: newItem._id,
@@ -70,7 +70,9 @@ test('increment the quantity when already in cart', async () => {
 
   const {data} = await graphqlCall(ADD_TO_CART_MUTATION, context, variables)
 
+  expect(data.addToCart).toHaveProperty('_id', newCartItem.id)
   expect(data.addToCart).toHaveProperty('quantity', 2)
+  expect(data.addToCart.item).toHaveProperty('_id', newItem.id)
 })
 
 test('create cart item when not in cart', async () => {
@@ -98,4 +100,5 @@ test('create cart item when not in cart', async () => {
 
   expect(data.addToCart).toHaveProperty('_id')
   expect(data.addToCart).toHaveProperty('quantity', 1)
+  expect(data.addToCart.item).toHaveProperty('_id')
 })
