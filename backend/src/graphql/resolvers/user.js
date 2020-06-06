@@ -296,6 +296,28 @@ const resolvers = {
         message: 'Email successfully updated!',
       }
     },
+    addToCart: async (parent, {id}, ctx, info) => {
+      isAuthenticated(ctx)
+
+      const foundItem = await ctx.db.cartItem
+        .findOne({user: ctx.req.userId, item: id})
+        .select('_id')
+        .lean()
+
+      if (foundItem) {
+        return ctx.db.cartItem
+          .findByIdAndUpdate(foundItem._id, {$inc: {quantity: 1}}, {new: true})
+          .populate('item')
+          .lean()
+      }
+
+      const createdItem = await ctx.db.cartItem.create({
+        user: ctx.req.userId,
+        item: id,
+      })
+
+      return createdItem.populate('item').execPopulate()
+    },
   },
   User: {
     cart: ({_id}, args, ctx, info) => {

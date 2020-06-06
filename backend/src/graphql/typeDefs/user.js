@@ -32,6 +32,7 @@ const typeDefs = gql`
       email: String!
       confirmEmail: String!
     ): Status
+    addToCart(id: ID!): CartItem
   }
 
   type User {
