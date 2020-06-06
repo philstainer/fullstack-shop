@@ -318,6 +318,26 @@ const resolvers = {
 
       return createdItem.populate('item').execPopulate()
     },
+    removeFromCart: async (parent, {id}, ctx, info) => {
+      isAuthenticated(ctx)
+
+      const foundItem = await ctx.db.cartItem
+        .findOne({
+          user: ctx.req.userId,
+          item: id,
+        })
+        .select('_id')
+        .lean()
+
+      if (!foundItem) {
+        throw new Error('No CartItem Found...')
+      }
+
+      return ctx.db.cartItem
+        .findByIdAndRemove(foundItem._id)
+        .populate('item')
+        .lean()
+    },
   },
   User: {
     cart: ({_id}, args, ctx, info) => {

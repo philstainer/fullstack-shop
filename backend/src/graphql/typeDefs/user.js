@@ -33,6 +33,7 @@ const typeDefs = gql`
       confirmEmail: String!
     ): Status
     addToCart(id: ID!): CartItem
+    removeFromCart(id: ID!): CartItem
   }
 
   type User {
