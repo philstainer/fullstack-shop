@@ -40,6 +40,13 @@ const typeDefs = gql`
     email: String!
     confirmed: Boolean!
     permissions: [String!]
+    cart: [CartItem!]!
+  }
+
+  type CartItem {
+    _id: ID!
+    quantity: Int!
+    item: Item
   }
 `
 

@@ -1,7 +1,7 @@
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
 
-import {user} from '#root/models'
+import {user, item, cartItem} from '#root/models'
 
 const ME_QUERY = `
   {
@@ -9,13 +9,30 @@ const ME_QUERY = `
       _id
       name
       email
+      cart {
+        _id
+        quantity
+        item {
+          _id
+          title
+          description
+          imageUrl
+          price
+        }
+      }
     }
   }
 `
 
 beforeAll(() => dbConnect())
 afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+afterEach(() =>
+  Promise.all([
+    user.deleteMany({}),
+    item.deleteMany({}),
+    cartItem.deleteMany({}),
+  ]),
+)
 
 test('returns null when not logged in', async () => {
   const {data} = await graphqlCall(ME_QUERY, null, null)
@@ -30,6 +47,19 @@ test('returns user details when logged in', async () => {
     password: 'sdajnj2312',
   })
 
+  const newItem = await item.create({
+    title: 'title',
+    description: 'desc',
+    imageUrl: 'http://testx.com',
+    price: 19,
+  })
+
+  await cartItem.create({
+    quantity: 1,
+    user: newUser._id,
+    item: newItem._id,
+  })
+
   const context = {
     req: {userId: newUser.id},
     res: {},
@@ -40,4 +70,7 @@ test('returns user details when logged in', async () => {
   expect(data.me).toHaveProperty('_id')
   expect(data.me).toHaveProperty('name', newUser.name)
   expect(data.me).toHaveProperty('email', newUser.email)
+
+  expect(data.me.cart).toHaveLength(1)
+  expect(data.me.cart[0].item).toHaveProperty('title', newItem.title)
 })

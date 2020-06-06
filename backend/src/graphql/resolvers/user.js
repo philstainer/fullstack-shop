@@ -20,7 +20,7 @@ const resolvers = {
     me: async (parent, args, ctx, info) => {
       if (!ctx?.req?.userId) return null
 
-      const selected = selectedFields(info)
+      const selected = selectedFields(info, ['cart'])
 
       const foundUser = await ctx.db.user
         .findById(ctx.req.userId)
@@ -295,6 +295,17 @@ const resolvers = {
         status: 'Success',
         message: 'Email successfully updated!',
       }
+    },
+  },
+  User: {
+    cart: ({_id}, args, ctx, info) => {
+      const selected = selectedFields(info)
+
+      return ctx.db.cartItem
+        .find({user: _id})
+        .select(selected)
+        .lean()
+        .populate('item')
     },
   },
 }

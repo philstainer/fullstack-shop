@@ -1,10 +1,10 @@
-import {Schema, model} from 'mongoose'
+import {Schema, model, ObjectId} from 'mongoose'
 
 const CartItemSchema = new Schema(
   {
     quantity: {type: Number, required: true, default: 1},
-    user: {type: Schema.Types.ObjectId, ref: 'user', required: true},
-    item: {type: Schema.Types.ObjectId, ref: 'item'},
+    user: {type: ObjectId, ref: 'user', required: true},
+    item: {type: ObjectId, ref: 'item', required: true},
   },
   {timestamps: true},
 )
