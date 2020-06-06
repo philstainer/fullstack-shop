@@ -7,10 +7,10 @@ afterAll(() => {
   jest.unmock('graphql-fields')
 })
 
-test('returns _id by default', () => {
-  graphqlFields.mockImplementationOnce(() => ({}))
+test('returns _id by default and removes __typename', () => {
+  graphqlFields.mockImplementationOnce(() => ({__typename: 'fake type'}))
 
-  expect(selectedFields()).toBe('_id')
+  expect(selectedFields()).toBe('id _id')
 })
 
 test('returns selected fields', () => {
@@ -18,5 +18,5 @@ test('returns selected fields', () => {
 
   graphqlFields.mockImplementationOnce(() => fields)
 
-  expect(selectedFields()).toBe('name email _id')
+  expect(selectedFields()).toBe('name email id _id')
 })
