@@ -5,7 +5,7 @@ import {GraphQLError} from 'graphql'
 import Cart from '#root/components/Cart'
 import ME_QUERY from '#root/graphql/me.query'
 
-import {fakeUser, fakeItem} from '#root/utils/testUtils'
+import {fakeUser, fakeCartItem} from '#root/utils/testUtils'
 
 test('should fetch cart on mount and have loading status', async () => {
   const me = {
@@ -49,7 +49,9 @@ test('should show cart with quantity count', async () => {
   const me = {
     request: {query: ME_QUERY},
     result: jest.fn(() => ({
-      data: {me: {...fakeUser(), cart: [{quantity, item: fakeItem()}]}},
+      data: {
+        me: fakeUser({cart: [fakeCartItem({quantity})]}),
+      },
     })),
   }
 

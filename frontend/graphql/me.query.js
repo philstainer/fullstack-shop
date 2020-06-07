@@ -9,6 +9,7 @@ const ME_QUERY = gql`
       confirmed
       permissions
       cart {
+        _id
         quantity
         item {
           _id
