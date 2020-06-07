@@ -22,6 +22,18 @@ export const AUTH_MODAL_MUTATION = gql`
   }
 `
 
+export const TOGGLE_CART_MUTATION = gql`
+  mutation {
+    toggleCart @client
+  }
+`
+
+export const CART_OPEN_QUERY = gql`
+  query {
+    cartOpen @client
+  }
+`
+
 export const resolvers = {
   Mutation: {
     toggleAuthModal: (root, variables, {cache}) => {
@@ -32,6 +44,19 @@ export const resolvers = {
       })
 
       return null
+    },
+    toggleCart: (root, variables, {cache}) => {
+      const {cartOpen} = cache.readQuery({
+        query: CART_OPEN_QUERY,
+      })
+
+      const data = {
+        data: {cartOpen: !cartOpen},
+      }
+
+      cache.writeData(data)
+
+      return data
     },
   },
 }

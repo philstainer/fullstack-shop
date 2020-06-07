@@ -20,6 +20,7 @@ const client = ({initialState}) => {
   cache.writeData({
     data: {
       authModal: null,
+      cartOpen: false,
     },
   })
 
