@@ -8,6 +8,16 @@ const ME_QUERY = gql`
       email
       confirmed
       permissions
+      cart {
+        quantity
+        item {
+          _id
+          title
+          description
+          imageUrl
+          price
+        }
+      }
     }
   }
 `

@@ -4,6 +4,7 @@ export const fakeUser = () => ({
   email: 'test@email.com',
   confirmed: true,
   permissions: ['USER'],
+  cart: [],
 })
 
 export const fakeItem = () => ({
