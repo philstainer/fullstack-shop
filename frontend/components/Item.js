@@ -5,6 +5,8 @@ import Link from 'next/link'
 import ME_QUERY from '#root/graphql/me.query'
 import StyledItem from '#root/components/styles/StyledItem'
 import RemoveItem from '#root/components/RemoveItem'
+import AddToCart from '#root/components/AddToCart'
+
 import formatPrice from '#root/utils/formatPrice'
 import hasPermission from '#root/utils/hasPermission'
 
@@ -38,9 +40,7 @@ const Item = ({item, skip}) => {
           </Link>
         )}
 
-        <button className="add" type="button">
-          Add to cart
-        </button>
+        <AddToCart id={item._id} />
 
         <RemoveItem id={item._id} skip={skip} />
       </div>
