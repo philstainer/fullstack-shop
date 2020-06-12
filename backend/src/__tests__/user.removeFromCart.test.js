@@ -41,7 +41,7 @@ test('returns null when not logged in', async () => {
   expect(errors[0].message).toMatch(/you must be logged in to do that/i)
 })
 
-test('create cart item when not in cart', async () => {
+test('returns error when CartItem not found', async () => {
   const newUser = await user.create({
     name: 'Test',
     email: 'test@test.com',
@@ -61,7 +61,7 @@ test('create cart item when not in cart', async () => {
   expect(errors[0].message).toMatch(/no cartitem found/i)
 })
 
-test('create cart item when not in cart', async () => {
+test('returns and removes cart item', async () => {
   const newUser = await user.create({
     name: 'Test',
     email: 'test@test.com',
@@ -81,7 +81,7 @@ test('create cart item when not in cart', async () => {
     item: newItem._id,
   })
 
-  const variables = {id: newItem.id}
+  const variables = {id: newCartItem.id}
 
   const context = {req: {userId: newUser.id}, res: {}}
 
@@ -93,4 +93,8 @@ test('create cart item when not in cart', async () => {
 
   expect(data.removeFromCart).toHaveProperty('_id', newCartItem.id)
   expect(data.removeFromCart.item).toHaveProperty('_id', newItem.id)
+
+  const foundCartItem = await cartItem.findById(newCartItem.id).select('_id')
+
+  expect(foundCartItem).toBeNull()
 })

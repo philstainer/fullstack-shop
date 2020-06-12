@@ -324,7 +324,7 @@ const resolvers = {
       const foundItem = await ctx.db.cartItem
         .findOne({
           user: ctx.req.userId,
-          item: id,
+          _id: id,
         })
         .select('_id')
         .lean()
