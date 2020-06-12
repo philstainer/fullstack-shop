@@ -25,17 +25,11 @@ const RemoveFromCart = ({id}) => {
     update,
   })
 
-  const handleRemove = () => {
-    try {
-      removeCartItem()
-    } catch (error) {}
-  }
-
   return (
     <StyledRemoveCartItem
       type="button"
       title="Delete Item"
-      onClick={handleRemove}
+      onClick={removeCartItem}
       disabled={loading}
       data-testid="removeCartItem"
     >
