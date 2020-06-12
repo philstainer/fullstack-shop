@@ -39,7 +39,7 @@ const SideCart = () => {
         </h2>
 
         <p>
-          Total of {me.cart.length} Item {me.cart.length === 1 ? '' : 's'} in
+          Total of {me.cart.length} Item{me.cart.length === 1 ? '' : "'s"} in
           your cart.
         </p>
       </header>
