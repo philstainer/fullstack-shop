@@ -12,7 +12,7 @@ export const fakeItem = overrides => ({
   _id: '12345',
   title: 'Title',
   description: 'Description',
-  imageUrl: 'https://localhost:3000',
+  imageUrl: 'https://localhost:3000/',
   price: 9999,
   ...overrides,
 })
