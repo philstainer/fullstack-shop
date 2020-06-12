@@ -3,10 +3,12 @@ import gql from 'graphql-tag'
 export const typeDefs = gql`
   extend type Query {
     authModal: Number
+    cartOpen: Boolean
   }
 
   extend type Mutation {
     toggleAuthModal: Number
+    toggleCart: Boolean
   }
 `
 
@@ -23,13 +25,13 @@ export const AUTH_MODAL_MUTATION = gql`
 `
 
 export const TOGGLE_CART_MUTATION = gql`
-  mutation {
+  mutation toggleCart {
     toggleCart @client
   }
 `
 
 export const CART_OPEN_QUERY = gql`
-  query {
+  query cartOpen {
     cartOpen @client
   }
 `
