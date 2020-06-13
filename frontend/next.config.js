@@ -3,5 +3,6 @@ module.exports = {
     BACKEND_URL: process.env.BACKEND_URL,
     CLOUDINARY_PRESET: process.env.CLOUDINARY_PRESET,
     CLOUDINARY_URL: process.env.CLOUDINARY_URL,
+    STRIPE_PUBLIC: process.env.STRIPE_PUBLIC,
   },
 }
