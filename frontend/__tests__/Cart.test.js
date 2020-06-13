@@ -43,6 +43,27 @@ test('should show fetch cart error', async () => {
   })
 })
 
+test('should return null when not logged in', async () => {
+  const me = {
+    request: {query: ME_QUERY},
+    result: jest.fn(() => ({
+      data: {
+        me: null,
+      },
+    })),
+  }
+
+  const {container} = render(
+    <MockedProvider mocks={[me]} addTypename={false}>
+      <Cart />
+    </MockedProvider>,
+  )
+
+  await waitFor(() => {
+    expect(container).toBeEmptyDOMElement()
+  })
+})
+
 test('should show cart with quantity count', async () => {
   const quantity = 1
 
