@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import {useQuery} from '@apollo/react-hooks'
 import Head from 'next/head'
-import moment from 'moment'
+import {format} from 'date-fns'
 
 import ORDER_QUERY from '#root/graphql/order.query'
 
@@ -35,7 +35,7 @@ const Order = ({query: {id}}) => {
 
       <p>
         <span>Date</span>
-        <span>{moment(order.createdAt).format('MMMM d, YYYY h:mm a')}</span>
+        <span>{format(new Date(order.createdAt), 'MMMM d, yyyy h:mm a')}</span>
       </p>
 
       <p>
