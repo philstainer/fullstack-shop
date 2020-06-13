@@ -74,14 +74,10 @@ const resolvers = {
   },
   Order: {
     items: (parent, args, ctx, info) => {
-      const selected = selectedFields(info)
-
-      return ctx.db.orderItem.find({order: parent._id}).select(selected).lean()
+      return ctx.loader.orderItems.load(parent._id)
     },
     user: (parent, args, ctx, info) => {
-      const selected = selectedFields(info)
-
-      return ctx.db.user.findById(parent.user).select(selected).lean()
+      return ctx.loader.users.load(parent.user)
     },
   },
 }

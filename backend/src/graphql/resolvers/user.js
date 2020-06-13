@@ -340,14 +340,8 @@ const resolvers = {
     },
   },
   User: {
-    cart: ({_id}, args, ctx, info) => {
-      const selected = selectedFields(info)
-
-      return ctx.db.cartItem
-        .find({user: _id})
-        .select(selected)
-        .lean()
-        .populate('item')
+    cart: (parent, args, ctx, info) => {
+      return ctx.loader.cartItems.load(parent._id)
     },
   },
 }

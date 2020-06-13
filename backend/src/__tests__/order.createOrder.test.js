@@ -1,5 +1,6 @@
 import {gql} from 'apollo-server-express'
 import {print} from 'graphql'
+import loader from '#root/graphql/loaders'
 
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
@@ -82,6 +83,7 @@ test('creates stripe charge, create order, clear cart and return order', async (
     req: {
       userId: createdUser._id,
     },
+    loader,
   }
 
   const id = '12345'

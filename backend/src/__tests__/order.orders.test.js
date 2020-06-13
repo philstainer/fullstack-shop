@@ -3,6 +3,7 @@ import {print} from 'graphql'
 
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
+import loader from '#root/graphql/loaders'
 
 import {user, order, orderItem} from '#root/models'
 
@@ -72,6 +73,7 @@ test('returns orders', async () => {
     req: {
       userId: createdUser._id,
     },
+    loader,
   }
 
   const {data} = await graphqlCall(ORDERS_QUERY, context, null)

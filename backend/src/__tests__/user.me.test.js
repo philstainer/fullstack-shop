@@ -1,5 +1,6 @@
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
 import graphqlCall from '#root/utils/graphqlCall'
+import loader from '#root/graphql/loaders'
 
 import {user, item, cartItem} from '#root/models'
 
@@ -63,6 +64,7 @@ test('returns user details when logged in', async () => {
   const context = {
     req: {userId: newUser.id},
     res: {},
+    loader,
   }
 
   const {data} = await graphqlCall(ME_QUERY, context, null)
