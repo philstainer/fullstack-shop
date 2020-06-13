@@ -1,4 +1,4 @@
-import {Schema, model} from 'mongoose'
+import {Schema, model, ObjectId} from 'mongoose'
 
 const OrderItemSchema = new Schema(
   {
@@ -7,7 +7,7 @@ const OrderItemSchema = new Schema(
     imageUrl: {type: String, required: true, trim: true},
     price: {type: Number, required: true},
     quantity: {type: Number, required: true, default: 1},
-    order: {type: Schema.Types.ObjectId, ref: 'order', required: true},
+    order: {type: ObjectId, ref: 'order', required: true},
   },
   {timestamps: true},
 )
