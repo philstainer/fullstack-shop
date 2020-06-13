@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders orders 1`] = `
+<div>
+  <p>
+    Loading orders...
+  </p>
+</div>
+`;
+
+exports[`renders orders 2`] = `
+<div>
+  <div
+    class="StyledOrders-sc-90v5kd-0 CWRYh"
+  >
+    <h2>
+      You have 
+      1
+       orders
+    </h2>
+    <ul>
+      <li>
+        <a>
+          <p>
+            Ordered
+          </p>
+          <p>
+            Order Number
+          </p>
+          <p>
+            Items
+          </p>
+          <p>
+            Products
+          </p>
+          <p>
+            Total
+          </p>
+        </a>
+      </li>
+      <li
+        title="View order"
+      >
+        <a
+          href="/order?id=12345"
+        >
+          <p>
+            about 2 years ago
+          </p>
+          <p>
+            <strong>
+              12345
+            </strong>
+          </p>
+          <p>
+            1
+          </p>
+          <p>
+            1
+          </p>
+          <p>
+            £50
+          </p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

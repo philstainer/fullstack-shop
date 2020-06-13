@@ -7,6 +7,7 @@ import withAuth from '#root/components/withAuth'
 
 import ChangePassword from '#root/components/ChangePassword'
 import ChangeEmail from '#root/components/ChangeEmail'
+import Orders from '#root/components/Orders'
 
 export const Account = () => {
   const {data, loading, error} = useQuery(ME_QUERY)
@@ -40,6 +41,8 @@ export const Account = () => {
             (confirmed ? 'Confirmed' : 'Not Confirmed')}
         </button>
       </StyledAccount.Main>
+
+      <Orders />
 
       <ChangePassword />
       <ChangeEmail />
