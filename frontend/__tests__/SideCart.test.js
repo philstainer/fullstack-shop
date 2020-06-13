@@ -308,11 +308,6 @@ test('button onClick removes cartItem from cart', async () => {
 })
 
 test('<StripeCheckout /> onclick checks out', async () => {
-  // jest.mock('react-stripe-checkout', () => ({children, token}) => {
-  //   token({id: 12345})
-  //   return <span>{children}</span>
-  // })
-
   const cache = new InMemoryCache({addTypename: false})
 
   cache.writeData({data: {cartOpen: true}})
