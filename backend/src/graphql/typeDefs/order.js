@@ -3,6 +3,7 @@ import {gql} from 'apollo-server-express'
 const typeDefs = gql`
   extend type Query {
     orders: [Order]!
+    order(id: ID!): Order
   }
 
   extend type Mutation {

@@ -1,6 +1,5 @@
 import isAuthenticated from '#root/utils/isAuthenticated'
 import selectedFields from '#root/utils/selectedFields'
-import {transport, basicTemplate} from '#root/utils/mail'
 import stripe from '#root/utils/stripe'
 
 const resolvers = {
@@ -11,6 +10,13 @@ const resolvers = {
       const selected = selectedFields(info, 'items')
 
       return ctx.db.order.find({user: ctx.req.userId}).select(selected).lean()
+    },
+    order: async (parent, {id}, ctx, info) => {
+      isAuthenticated(ctx)
+
+      const selected = selectedFields(info, 'items')
+
+      return ctx.db.order.findById(id).select(selected).lean()
     },
   },
   Mutation: {
