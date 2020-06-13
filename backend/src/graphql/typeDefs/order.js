@@ -25,6 +25,8 @@ const typeDefs = gql`
     total: Int!
     charge: String!
     user: User!
+    createdAt: DateTime!
+    updatedAt: DateTime!
   }
 `
 

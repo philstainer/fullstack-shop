@@ -5,6 +5,8 @@ import item from '#root/graphql/typeDefs/item'
 import order from '#root/graphql/typeDefs/order'
 
 const root = gql`
+  scalar DateTime
+
   type Query {
     _empty: String
   }
