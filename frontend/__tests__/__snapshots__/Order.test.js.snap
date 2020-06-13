@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders order 1`] = `
+<div
+  class="StyledOrder-dj9zr0-0 kgBjuJ"
+  data-testid="order"
+>
+  <p>
+    <span>
+      Order ID:
+    </span>
+    <span>
+      12345
+    </span>
+  </p>
+  <p>
+    <span>
+      Charge
+    </span>
+    <span>
+      ch_12345
+    </span>
+  </p>
+  <p>
+    <span>
+      Date
+    </span>
+    <span>
+      April 5, 2018 8:24 pm
+    </span>
+  </p>
+  <p>
+    <span>
+      Order Total
+    </span>
+    <span>
+      £50
+    </span>
+  </p>
+  <p>
+    <span>
+      Item Count
+    </span>
+    <span>
+      1
+    </span>
+  </p>
+  <div
+    class="items"
+  >
+    <div
+      class="order-item"
+    >
+      <img
+        alt="Title"
+        src="https://localhost:3000/"
+      />
+      <div
+        class="item-details"
+      >
+        <h2>
+          Title
+        </h2>
+        <p>
+          1
+           x 
+          £99.99
+           =
+           
+          £99.99
+        </p>
+        <p>
+          Description
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
