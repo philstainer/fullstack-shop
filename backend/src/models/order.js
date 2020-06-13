@@ -1,10 +1,10 @@
-import {Schema, model, Decimal128} from 'mongoose'
+import {Schema, model, ObjectId} from 'mongoose'
 
 const OrderSchema = new Schema(
   {
-    total: {type: Decimal128, required: true},
+    total: {type: Number, required: true},
     charge: {type: String, required: true},
-    user: {type: Schema.Types.ObjectId, ref: 'user', required: true},
+    user: {type: ObjectId, ref: 'user', required: true},
   },
   {timestamps: true},
 )
