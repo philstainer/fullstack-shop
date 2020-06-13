@@ -1,6 +1,10 @@
 import {gql} from 'apollo-server-express'
 
 const typeDefs = gql`
+  extend type Query {
+    orders: [Order]!
+  }
+
   extend type Mutation {
     createOrder(token: String!): Order!
   }

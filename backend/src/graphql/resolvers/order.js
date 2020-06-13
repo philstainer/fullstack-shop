@@ -4,7 +4,15 @@ import {transport, basicTemplate} from '#root/utils/mail'
 import stripe from '#root/utils/stripe'
 
 const resolvers = {
-  Query: {},
+  Query: {
+    orders: async (parent, args, ctx, info) => {
+      isAuthenticated(ctx)
+
+      const selected = selectedFields(info, 'items')
+
+      return ctx.db.order.find({user: ctx.req.userId}).select(selected).lean()
+    },
+  },
   Mutation: {
     createOrder: async (parent, {token}, ctx, info) => {
       isAuthenticated(ctx)
@@ -39,8 +47,6 @@ const resolvers = {
         user: ctx.req.userId,
       })
 
-      await newOrder.populate('user').execPopulate()
-
       // Create Order Items
       const orderItems = cart.map(cartItem => ({
         ...cartItem.item,
@@ -48,7 +54,7 @@ const resolvers = {
         order: newOrder._id,
       }))
 
-      const newOrderItems = await ctx.db.orderItem.insertMany(orderItems)
+      await ctx.db.orderItem.insertMany(orderItems)
 
       // Remove items from user cart
       const cartItemIds = cart.map(item => item._id)
@@ -57,7 +63,19 @@ const resolvers = {
         _id: {$in: cartItemIds},
       })
 
-      return {...newOrder._doc, items: newOrderItems}
+      return newOrder
+    },
+  },
+  Order: {
+    items: (parent, args, ctx, info) => {
+      const selected = selectedFields(info)
+
+      return ctx.db.orderItem.find({order: parent._id}).select(selected).lean()
+    },
+    user: (parent, args, ctx, info) => {
+      const selected = selectedFields(info)
+
+      return ctx.db.user.findById(parent.user).select(selected).lean()
     },
   },
 }
