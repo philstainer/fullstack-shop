@@ -65,6 +65,11 @@ const StyledSideCart = styled.div`
     font-weight: 600;
     padding: 2rem;
 
+    span {
+      display: grid;
+      height: 100%;
+    }
+
     button {
       height: 100%;
 

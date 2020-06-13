@@ -17,6 +17,7 @@
     "graphql": "^15.0.0",
     "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^3.0.0",
+    "moment": "^2.26.0",
     "next": "^9.4.4",
     "next-with-apollo": "^5.0.1",
     "prop-types": "^15.7.2",
@@ -24,6 +25,7 @@
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.7.2",
     "react-icons": "^3.10.0",
+    "react-stripe-checkout": "^2.6.3",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {

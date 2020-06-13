@@ -12,6 +12,7 @@ const Cart = () => {
 
   if (loading) return <div>Loading cart...</div>
   if (error) return <div>Failed to load cart...</div>
+  if (!data.me) return null
 
   const count = data.me.cart.reduce((total, item) => total + item.quantity, 0)
 

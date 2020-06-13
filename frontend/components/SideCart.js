@@ -12,13 +12,14 @@ import calcTotalPrice from '#root/utils/calcTotalPrice'
 
 import StyledSideCart from '#root/components/styles/StyledSideCart'
 import CartItem from '#root/components/CartItem'
+import StripeCheckout from '#root/components/StripeCheckout'
 
 const SideCart = () => {
   const {data, loading, error} = useQuery(ME_QUERY)
   const {data: local} = useQuery(CART_OPEN_QUERY)
   const [toggleCart] = useMutation(TOGGLE_CART_MUTATION)
 
-  if (loading || error) return null
+  if (loading || error || !data.me) return null
 
   const {me} = data
 
@@ -53,7 +54,9 @@ const SideCart = () => {
       <footer>
         <p>{formatPrice(calcTotalPrice(me.cart))}</p>
 
-        {me.cart.length && <button>Checkout</button>}
+        <StripeCheckout>
+          <button>Checkout</button>
+        </StripeCheckout>
       </footer>
     </StyledSideCart>
   )

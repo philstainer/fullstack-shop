@@ -23,3 +23,23 @@ export const fakeCartItem = overrides => ({
   item: fakeItem(),
   ...overrides,
 })
+
+export const fakeOrderItem = overrides => ({
+  _id: '12345',
+  title: 'Title',
+  description: 'Description',
+  imageUrl: 'https://localhost:3000/',
+  price: 9999,
+  quantity: 1,
+  ...overrides,
+})
+
+export const fakeOrder = overrides => ({
+  _id: '12345',
+  charge: 'ch_12345',
+  total: 5000,
+  items: [fakeOrderItem(), fakeOrderItem()],
+  createdAt: '2018-04-06T19:24:16.000Z',
+  user: fakeUser(),
+  ...overrides,
+})

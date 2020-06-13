@@ -2,14 +2,32 @@ import {render, fireEvent, waitFor} from '@testing-library/react'
 import {MockedProvider} from '@apollo/react-testing'
 import {GraphQLError} from 'graphql'
 import {InMemoryCache} from 'apollo-cache-inmemory'
+import Router from 'next/router'
 
 import ME_QUERY from '#root/graphql/me.query'
 import REMOVE_CART_ITEM_MUTATION from '#root/graphql/removeCartItem.mutation'
+import CREATE_ORDER_MUTATION from '#root/graphql/createOrder.mutation'
 
 import SideCart from '#root/components/SideCart'
 import formatPrice from '#root/utils/formatPrice'
 import calcTotalPrice from '#root/utils/calcTotalPrice'
-import {fakeUser, fakeCartItem} from '#root/utils/testUtils'
+import {fakeUser, fakeCartItem, fakeOrder} from '#root/utils/testUtils'
+
+Router.router = {push() {}}
+
+jest.mock('react-stripe-checkout', () => ({children, token}) => {
+  const onClick = e => {
+    e.preventDefault()
+
+    token({id: '12345'})
+  }
+
+  return (
+    <span data-testid="stripe-checkout" onClick={onClick}>
+      {children}
+    </span>
+  )
+})
 
 test('returns null when fetch loading', async () => {
   const cache = new InMemoryCache({addTypename: false})
@@ -286,5 +304,74 @@ test('button onClick removes cartItem from cart', async () => {
     })
 
     expect(updatedCache.me.cart).toHaveLength(0)
+  })
+})
+
+test('<StripeCheckout /> onclick checks out', async () => {
+  // jest.mock('react-stripe-checkout', () => ({children, token}) => {
+  //   token({id: 12345})
+  //   return <span>{children}</span>
+  // })
+
+  const cache = new InMemoryCache({addTypename: false})
+
+  cache.writeData({data: {cartOpen: true}})
+
+  Router.router.push = jest.fn()
+
+  const meMock = {
+    request: {query: ME_QUERY},
+    result: jest.fn(() => ({
+      data: {me: fakeUser({cart: [fakeCartItem()]})},
+    })),
+  }
+
+  const createOrderMock = {
+    request: {query: CREATE_ORDER_MUTATION, variables: {token: '12345'}},
+    result: jest.fn(() => ({
+      data: {createOrder: fakeOrder()},
+    })),
+  }
+
+  const meRefetchMock = {
+    request: {query: ME_QUERY},
+    result: jest.fn(() => ({
+      data: {me: fakeUser({cart: []})},
+    })),
+  }
+
+  const resolvers = {
+    Mutation: {
+      toggleCart: jest.fn(),
+    },
+  }
+
+  const {queryByTestId} = render(
+    <MockedProvider
+      mocks={[meMock, createOrderMock, meRefetchMock]}
+      addTypename={false}
+      cache={cache}
+      resolvers={resolvers}
+    >
+      <SideCart />
+    </MockedProvider>,
+  )
+
+  await waitFor(() => {
+    expect(queryByTestId('cart')).toBeInTheDocument()
+  })
+
+  fireEvent.click(queryByTestId('stripe-checkout'))
+
+  await waitFor(() => {
+    expect(createOrderMock.result).toHaveBeenCalled()
+    expect(meRefetchMock.result).toHaveBeenCalled()
+    expect(resolvers.Mutation.toggleCart).toHaveBeenCalled()
+    expect(Router.router.push).toHaveBeenCalledWith({
+      pathname: '/order',
+      query: {
+        id: '12345',
+      },
+    })
   })
 })
