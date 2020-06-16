@@ -29,4 +29,4 @@ app.use(cors({credentials: true, origin: process.env.FRONTEND_URL}))
 
 apolloServer.applyMiddleware({app, cors: false, path: '/graphql'})
 
-module.exports = app
+export default app
