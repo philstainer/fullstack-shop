@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 import loader from '#root/graphql/loaders'
 
@@ -25,15 +29,9 @@ const ME_QUERY = `
   }
 `
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() =>
-  Promise.all([
-    user.deleteMany({}),
-    item.deleteMany({}),
-    cartItem.deleteMany({}),
-  ]),
-)
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns null when not logged in', async () => {
   const {data} = await graphqlCall(ME_QUERY, null, null)

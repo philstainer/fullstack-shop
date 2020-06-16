@@ -2,7 +2,11 @@ import {gql} from 'apollo-server-express'
 import {print} from 'graphql'
 import loader from '#root/graphql/loaders'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 import stripe from '#root/utils/stripe'
 
@@ -29,17 +33,9 @@ const CREATE_ORDER_MUTATION = print(gql`
   }
 `)
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() =>
-  Promise.all([
-    user.deleteMany({}),
-    item.deleteMany({}),
-    cartItem.deleteMany({}),
-    order.deleteMany({}),
-    orderItem.deleteMany({}),
-  ]),
-)
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('throws error when not logged in', async () => {
   const variables = {

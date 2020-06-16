@@ -1,13 +1,17 @@
 import mongoose from 'mongoose'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import loader from '#root/graphql/loaders/user'
 
 import {user} from '#root/models'
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns null if not found', async () => {
   const data = await loader.users.load(new mongoose.Types.ObjectId())

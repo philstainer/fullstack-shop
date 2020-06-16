@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {item} from '#root/models'
@@ -24,9 +28,9 @@ const fakeItem = {
   price: 9999,
 }
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => item.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns null when no item found', async () => {
   const variables = {id: new mongoose.Types.ObjectId().toString()}

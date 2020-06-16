@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {user} from '#root/models'
@@ -11,9 +15,9 @@ const SIGNIN_MUTATION = `
     } 
   }
 `
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns error when user not found', async () => {
   const variables = {

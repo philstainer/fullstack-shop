@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
 
-const dbConnect = () =>
-  mongoose.connect(process.env.MONGO_URL, {
+import accessEnv from '#root/utils/accessEnv'
+
+export const dbConnect = () =>
+  mongoose.connect(accessEnv('MONGO_URL'), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
     useFindAndModify: false,
   })
 
-const dbDisconnect = mongoose.disconnect
-
-export {dbConnect, dbDisconnect}
+export const dbDisconnect = mongoose.disconnect

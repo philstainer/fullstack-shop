@@ -1,5 +1,7 @@
 'use strict'
 
+import accessEnv from '#root/utils/accessEnv'
+
 const validationError = error => {
   return (
     error?.extensions?.exception?.details.map(detail => ({
@@ -14,7 +16,7 @@ const formatError = error => {
 
   if (stackTrace.startsWith('ValidationError:')) return validationError(error)
 
-  if (process.env.NODE_ENV === 'production')
+  if (accessEnv('NODE_ENV') === 'production')
     return {status: 'Error', message: 'Internal Server Error'}
 
   return error

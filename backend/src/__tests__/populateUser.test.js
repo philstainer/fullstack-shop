@@ -3,11 +3,15 @@ import mongoose from 'mongoose'
 import populateUser from '#root/utils/populateUser'
 
 import {user} from '#root/models'
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns next() when no userId', () => {
   const req = {}

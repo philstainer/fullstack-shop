@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {item} from '#root/models'
@@ -11,9 +15,9 @@ const ITEMS_QUERY = `
   }
 `
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => item.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns totalCount of 0', async () => {
   const {data} = await graphqlCall(ITEMS_QUERY, null, null)

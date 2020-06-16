@@ -1,1 +1,3 @@
-module.exports = require('stripe')(process.env.STRIPE_SECRET)
+import accessEnv from '#root/utils/accessEnv'
+
+module.exports = require('stripe')(accessEnv('STRIPE_SECRET'))

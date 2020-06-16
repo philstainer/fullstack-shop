@@ -1,11 +1,13 @@
 import {createTransport} from 'nodemailer'
 
+import accessEnv from '#root/utils/accessEnv'
+
 export const transport = createTransport({
-  host: process.env.MAIL_HOST,
-  port: process.env.MAIL_PORT,
+  host: accessEnv('MAIL_HOST'),
+  port: accessEnv('MAIL_PORT'),
   auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
+    user: accessEnv('MAIL_USER'),
+    pass: accessEnv('MAIL_PASS'),
   },
 })
 

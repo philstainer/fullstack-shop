@@ -2,7 +2,11 @@ import {gql} from 'apollo-server-express'
 import {print} from 'graphql'
 import mongoose from 'mongoose'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {user, item, cartItem} from '#root/models'
@@ -23,15 +27,9 @@ const REMOVE_FROM_CART_MUTATION = print(gql`
   }
 `)
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() =>
-  Promise.all([
-    user.deleteMany({}),
-    item.deleteMany({}),
-    cartItem.deleteMany({}),
-  ]),
-)
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('returns null when not logged in', async () => {
   const variables = {id: new mongoose.Types.ObjectId().toString()}

@@ -1,7 +1,11 @@
 import bcrypt from 'bcryptjs'
 import mongoose from 'mongoose'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 import {user} from '#root/models'
 
@@ -21,9 +25,9 @@ const CHANGE_EMAIL_MUTATION = `
   }
 `
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 const fakeUser = {
   name: 'Test',

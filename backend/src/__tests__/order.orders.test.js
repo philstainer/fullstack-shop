@@ -1,7 +1,11 @@
 import {gql} from 'apollo-server-express'
 import {print} from 'graphql'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 import loader from '#root/graphql/loaders'
 
@@ -29,15 +33,9 @@ const ORDERS_QUERY = print(gql`
   }
 `)
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() =>
-  Promise.all([
-    user.deleteMany({}),
-    order.deleteMany({}),
-    orderItem.deleteMany({}),
-  ]),
-)
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('throws error when not logged in', async () => {
   const {errors} = await graphqlCall(ORDERS_QUERY, null, null)

@@ -2,6 +2,7 @@
 
 import '@babel/polyfill'
 import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import accessEnv from '#root/utils/accessEnv'
 
 // Programming error
 process.on('uncaughtException', err => {
@@ -19,7 +20,7 @@ let server
 ;(async () => {
   await dbConnect()
 
-  server = await app.listen(process.env.BACKEND_PORT)
+  server = await app.listen(accessEnv('BACKEND_PORT'))
 
   console.log(
     `Server listening on port http://localhost:${

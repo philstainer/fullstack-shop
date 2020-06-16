@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {user, item} from '#root/models'
@@ -14,7 +18,7 @@ const ITEMS_QUERY = `
 `
 
 beforeAll(async () => {
-  await dbConnect()
+  await connect()
 
   const items = [
     {
@@ -88,11 +92,7 @@ beforeAll(async () => {
   await item.insertMany(items)
 })
 
-afterAll(async () => {
-  await Promise.all([user.deleteMany({}), item.deleteMany({})])
-
-  await dbDisconnect()
-})
+afterAll(() => closeDatabase())
 
 test('returns data with defaults', async () => {
   const {data} = await graphqlCall(ITEMS_QUERY, null, null)

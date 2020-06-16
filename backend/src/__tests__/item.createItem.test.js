@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {user, item} from '#root/models'
@@ -25,9 +29,9 @@ const CREATE_ITEM_MUTATION = `
   }
 `
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => Promise.all([user.deleteMany({}), item.deleteMany({})]))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 const fakeUser = {
   name: 'Test',

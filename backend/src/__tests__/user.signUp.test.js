@@ -1,4 +1,8 @@
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 import {transport} from '#root/utils/mail'
 
@@ -23,9 +27,9 @@ const SIGNUP_MUTATION = `
   }
 `
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => user.deleteMany({}))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('throws error if already logged in', async () => {
   const variables = {

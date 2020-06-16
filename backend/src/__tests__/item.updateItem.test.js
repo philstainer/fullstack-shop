@@ -1,6 +1,10 @@
 import mongoose from 'mongoose'
 
-import {dbConnect, dbDisconnect} from '#root/utils/dbConnection'
+import {
+  connect,
+  closeDatabase,
+  clearDatabase,
+} from '#root/utils/dbConnectionTest'
 import graphqlCall from '#root/utils/graphqlCall'
 
 import {user, item} from '#root/models'
@@ -42,9 +46,9 @@ const fakeItem = {
   price: 9999,
 }
 
-beforeAll(() => dbConnect())
-afterAll(() => dbDisconnect())
-afterEach(() => Promise.all([user.deleteMany({}), item.deleteMany({})]))
+beforeAll(() => connect())
+afterAll(() => closeDatabase())
+afterEach(() => clearDatabase())
 
 test('throws error when not logged in', async () => {
   const variables = {id: 12345}
