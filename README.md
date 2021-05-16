@@ -14,14 +14,3 @@ Uses the following technologies:
 # in main directory
   docker-compose up
 ```
-
-## Notes
-
-```yml
-# Docker containers defaults to UTC time zone, you can change with TZ environment
-# variable but for consistency leave it as UTC. Otherwise you have to worry about
-# date conversions 🤕.
-
-environment:
-  TZ: Europe/London
-```
